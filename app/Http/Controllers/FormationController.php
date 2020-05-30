@@ -42,14 +42,21 @@ class FormationController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'title' => 'required|min:3',
             'description' => 'required|min:10',
             'content' => 'required|min:30',
-            'date' => 'required'
+            'date' => 'required',
+            'g-recaptcha-response' => 'required|captcha'
         ]);
 
-        $formation = auth()->user()->formations()->create($data);
+
+        $formation = auth()->user()->formations()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'content' => $request->content,
+            'date' => $request->date,
+        ]);
 
         return redirect()->route('formations.show', $formation->id);
     }

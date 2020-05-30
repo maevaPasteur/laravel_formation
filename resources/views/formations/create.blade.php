@@ -35,7 +35,15 @@
                 <p class="error">{{ $errors->first('date') }}</p>
             @enderror
         </div>
-        {!! NoCaptcha::display() !!}
+        <div.form-group>
+            {!! NoCaptcha::display() !!}
+            @if ($errors->has('g-recaptcha-response'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                </span>
+            @endif
+        </div.form-group>
+
         <button type="submit">Créer ma formation</button>
     </form>
 @endsection
