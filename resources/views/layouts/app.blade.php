@@ -21,7 +21,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="@yield('body-class')">
     <div id="app">
 
         <header>
@@ -32,22 +32,22 @@
                     </li>
                     @guest
                         <li>
-                            <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="btn yellow" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))
                             <li>
-                                <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="btn dark" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @endif
                     @else
                         <li>
-                            <a href="{{ route('formations.create') }}">Créer une formation</a>
+                            <a class="btn" href="{{ route('formations.create') }}">Créer une formation</a>
                         </li>
                         <li>
-                            <a href="#">{{ Auth::user()->name }}</a>
+                            <a class="btn yellow" href="#">{{ Auth::user()->name }}</a>
                         </li>
                         <li>
-                            <a href="{{ route('logout') }}"
+                            <a class="btn red" href="{{ route('logout') }}"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
