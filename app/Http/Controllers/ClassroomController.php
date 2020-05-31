@@ -8,13 +8,24 @@ use Illuminate\Http\Request;
 class ClassroomController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $classrooms = Classroom::all();
+        return view('classrooms.index', ['classrooms' => $classrooms]);
     }
 
     /**
@@ -22,9 +33,9 @@ class ClassroomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return redirect()->route('classrooms.index');
     }
 
     /**
@@ -35,7 +46,13 @@ class ClassroomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $classroom = new Classroom;
+        $classroom->name = $request->name;
+        $classroom->places = $request->places;
+        $classroom->save();
+
+        return redirect()->route('classrooms.index');
     }
 
     /**
