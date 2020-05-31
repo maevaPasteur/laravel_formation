@@ -2,6 +2,11 @@
 
 @section('content')
     <h2>Formation en {{ $formation->title  }}</h2>
+    <h3>Catégorie(s) de la formation : 
+        @foreach($formation->categories as $category)
+            {{ $category->name }} | 
+        @endforeach
+    </h3>
     <p>{{ $formation->description  }}</p>
     <p>Formation proposée par {{  $formation->user->name }}</p>
 

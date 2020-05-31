@@ -15,6 +15,14 @@ class Formation extends Model
 
     public function sessions()
     {
-    return $this->morphMany('App\Session', 'formation')->lastest();
+        return $this->morphMany('App\Session', 'formation')->lastest();
+    }
+
+    /**
+     * The categories that belong to the categorie.
+     */
+    public function categories()
+    {
+        return $this->belongsToMany('App\Category');
     }
 }
