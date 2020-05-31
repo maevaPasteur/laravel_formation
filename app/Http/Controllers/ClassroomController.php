@@ -46,7 +46,6 @@ class ClassroomController extends Controller
      */
     public function store(Request $request)
     {
-
         $classroom = new Classroom;
         $classroom->name = $request->name;
         $classroom->places = $request->places;
@@ -63,7 +62,7 @@ class ClassroomController extends Controller
      */
     public function show(Classroom $classroom)
     {
-        //
+
     }
 
     /**

@@ -18,7 +18,7 @@ Route::get('/', 'FormationController@index')->name('formations.index');
 Route::resource('formations', 'FormationController')->except(['index']);
 
 // Sessions
-Route::post('/sessions/{formation}', 'SessionController@store')->name('sessions.store');
+Route::post('formations/{formation}', 'SessionController@store')->name('sessions.store');
 
 Auth::routes();
 

@@ -38,20 +38,17 @@ class SessionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Formation  $formation
      * @return \Illuminate\Http\Response
      */
-    public function store(Formation $formation)
+    public function store(Request $request, Formation $formation)
     {
-        request()->validate([
-            'start' => 'required',
-            'id_classroom' => 'required'
-        ]);
-
-        $session = new Session();
-        $session->start = request('start');
-        $session->id_classroom = request('id_classroom');
-
-        $formation->sessions()->save($session);
+        $session = new Session;
+        $session->classroom_id = $request->classroom_id;
+        $session->start = $request->start;
+        $session->formation_id = $formation->id;
+        $session->open = 1;
+        $session->save();
 
         return redirect()->route('formations.show', $formation->id);
     }
@@ -64,7 +61,8 @@ class SessionController extends Controller
      */
     public function show(Session $session)
     {
-        //
+        $sessions = Session::all();
+        return view('sessions.index', compact('sessions'));
     }
 
     /**

@@ -21,13 +21,18 @@
     <br><br><br>
 
     <h3>La liste des sessions</h3>
-
+    <ul>
+        @foreach($sessions as $session)
+            <li>{{ $session->start }}</li>
+        @endforeach
+    </ul>
 
     <br><br><br>
 
     <h3>AJouter une session</h3>
     <form action="{{ route('sessions.store', $formation) }}" method="POST">
         @csrf
+        <input name="formation_id" id="formation_id" type="text" hidden value="{{ $formation->id }}" />
         <div class="form-group">
             <label for="start">Date de la session</label>
             <input name="start" id="start" type="date" class="@error('start') is-invalid @enderror">

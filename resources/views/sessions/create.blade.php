@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('extra-js')
+    {!! NoCaptcha::renderJs() !!}
+@endsection
+
 @section('content')
     <form action="{{ route('formations.store') }}" method="POST">
         @csrf
@@ -24,6 +28,14 @@
                 <p class="error">{{ $errors->first('content') }}</p>
             @enderror
         </div>
+        <div.form-group>
+            {!! NoCaptcha::display() !!}
+            @if ($errors->has('g-recaptcha-response'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                </span>
+            @endif
+        </div.form-group>
 
         <button type="submit">Créer ma formation</button>
     </form>

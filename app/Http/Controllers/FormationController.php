@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use App\Formation;
+use App\Session;
 use Illuminate\Http\Request;
 
 class FormationController extends Controller
@@ -66,7 +67,8 @@ class FormationController extends Controller
     public function show(Formation $formation)
     {
         $classrooms = Classroom::all();
-        return view('formations.show', compact('formation', 'classrooms'));
+        $sessions = Session::all();
+        return view('formations.show', compact('formation', 'classrooms', 'sessions'));
     }
 
     /**
