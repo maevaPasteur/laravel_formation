@@ -21,6 +21,13 @@
                     <p class="error">{{ $errors->first('email') }}</p>
                @enderror
            </div>
+           <div class="form-group">
+               <label for="email">Rôle</label>
+               <input name="role" id="role" type="text" value="{{ Auth::user()->role }}" class="@error('role') is-invalid @enderror" disabled>
+               @error('role')
+                    <p class="error">{{ $errors->first('role') }}</p>
+               @enderror
+           </div>
            <button type="submit">Mettre à jour mes informations</button>
        </form>
    </div>
