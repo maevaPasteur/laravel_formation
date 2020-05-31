@@ -30,9 +30,10 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
-
+    public function update(Request $request)
     {
+        $user = auth()->user();
+
         $data = $request->validate([
             'name' => 'required|min:3',
             'email' => 'required',
