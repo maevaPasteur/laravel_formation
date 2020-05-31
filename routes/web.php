@@ -33,4 +33,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/classrooms', 'ClassroomController@index')->name('classrooms.index');
 Route::post('/classrooms', 'ClassroomController@store')->name('classrooms.store');
 
+// Categories
+Route::get('/categories', 'CategoryController@index')->name('categories.index');
+Route::post('/categories', 'CategoryController@store')->name('categories.store');
+
 Auth::routes();

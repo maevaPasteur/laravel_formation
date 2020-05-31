@@ -18,6 +18,12 @@
                     <article>
                         <a href="{{ route('formations.show', $formation)  }}">
                             <h2>Formation en {{ $formation->title  }}</h2>
+                            <h3>
+                                Catégorie(s) : 
+                                @foreach($formation->categories as $category)
+                                    {{ $category->name }} | 
+                                @endforeach
+                            </h3>
                             <p>{{ $formation->description  }}</p>
                             <button>Détail de la formation</button>
                         </a>
