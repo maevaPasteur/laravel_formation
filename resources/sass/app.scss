@@ -4,7 +4,65 @@
 // Variables
 @import 'variables';
 
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Nunito', sans-serif;
+}
 a {
     color: initial;
     text-decoration: none;
+}
+button {
+    background: none;
+    border: solid 1px #000;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+ul {
+    list-style-type: none;
+}
+h1 {
+    margin-bottom: 20px;
+}
+main {
+    width: 100%;
+    padding: 0 20px 100px;
+    max-width: 1000px;
+    margin: auto;
+}
+header ul {
+    display: flex;
+    padding: 20px;
+    margin-bottom: 40px;
+    border-bottom: solid 1px #eee;
+    li:not(:last-of-type) {
+        margin-right: 20px;
+    }
+    li:first-of-type {
+        margin-right: auto;
+    }
+}
+
+.list-formations {
+    li {
+        padding: 20px;
+        margin-bottom: 10px;
+        &:nth-of-type(odd) {
+            background: #fafafa;
+        }
+    }
+    & + nav ul {
+        display: flex;
+        justify-content: center;
+        li {
+            padding: 10px;
+        }
+    }
 }

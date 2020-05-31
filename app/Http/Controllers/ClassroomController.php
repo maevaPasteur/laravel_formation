@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Tags;
+use App\Classroom;
 use Illuminate\Http\Request;
 
-class TagsController extends Controller
+class ClassroomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TagsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Tags  $tags
+     * @param  \App\Classroom  $classroom
      * @return \Illuminate\Http\Response
      */
-    public function show(Tags $tags)
+    public function show(Classroom $classroom)
     {
         //
     }
@@ -52,10 +52,10 @@ class TagsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Tags  $tags
+     * @param  \App\Classroom  $classroom
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tags $tags)
+    public function edit(Classroom $classroom)
     {
         //
     }
@@ -64,10 +64,10 @@ class TagsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tags  $tags
+     * @param  \App\Classroom  $classroom
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tags $tags)
+    public function update(Request $request, Classroom $classroom)
     {
         //
     }
@@ -75,10 +75,10 @@ class TagsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Tags  $tags
+     * @param  \App\Classroom  $classroom
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tags $tags)
+    public function destroy(Classroom $classroom)
     {
         //
     }

@@ -2,14 +2,14 @@
 
 @section('content')
     <h1>La liste des formations</h1>
-    <ul>
+    <ul class="list-formations">
         @foreach($formations as $formation)
             <li>
                 <article>
                     <a href="{{ route('formations.show', $formation)  }}">
                         <h2>Formation en {{ $formation->title  }}</h2>
                         <p>{{ $formation->description  }}</p>
-                        <p>Formation proposée par {{  $formation->user->name }}</p>
+                        <button>Voir les prochaines sessions</button>
                     </a>
                 </article>
             </li>
