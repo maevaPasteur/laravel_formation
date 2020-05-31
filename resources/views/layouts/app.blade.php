@@ -44,7 +44,7 @@
                             <a class="btn" href="{{ route('formations.create') }}">Créer une formation</a>
                         </li>
                         <li>
-                            <a class="btn yellow" href="#">{{ Auth::user()->name }}</a>
+                            <a class="btn yellow" href="{{ route('profile.index') }}">Profil</a>
                         </li>
                         <li>
                             <a class="btn red" href="{{ route('logout') }}"
