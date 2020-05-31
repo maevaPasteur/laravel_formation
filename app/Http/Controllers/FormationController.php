@@ -46,7 +46,6 @@ class FormationController extends Controller
             'title' => 'required|min:3',
             'description' => 'required|min:10',
             'content' => 'required|min:30',
-            'date' => 'required',
             'g-recaptcha-response' => 'required|captcha'
         ]);
 
@@ -54,8 +53,7 @@ class FormationController extends Controller
         $formation = auth()->user()->formations()->create([
             'title' => $request->title,
             'description' => $request->description,
-            'content' => $request->content,
-            'date' => $request->date,
+            'content' => $request->content
         ]);
 
         return redirect()->route('formations.show', $formation->id);
@@ -98,8 +96,7 @@ class FormationController extends Controller
         $data = $request->validate([
             'title' => 'required|min:3',
             'description' => 'required|min:10',
-            'content' => 'required|min:30',
-            'date' => 'required'
+            'content' => 'required|min:30'
         ]);
 
         $formation->update($data);

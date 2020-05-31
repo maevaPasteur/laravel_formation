@@ -3,7 +3,6 @@
 @section('content')
     <h2>Formation en {{ $formation->title  }}</h2>
     <p>{{ $formation->description  }}</p>
-    <p>Le {{ $formation->date }}</p>
     <p>Formation proposée par {{  $formation->user->name }}</p>
 
     @can('update', $formation)

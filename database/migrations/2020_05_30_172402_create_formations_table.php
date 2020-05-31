@@ -18,7 +18,6 @@ class CreateFormationsTable extends Migration
             $table->string('title');
             $table->mediumText('description');
             $table->longText('content');
-            $table->dateTime('date');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

@@ -28,13 +28,6 @@
                 <p class="error">{{ $errors->first('content') }}</p>
             @enderror
         </div>
-        <div class="form-group">
-            <label for="date">Date du début de la formation</label>
-            <input name="date" id="date" type="date" class="@error('date') is-invalid @enderror">
-            @error('date')
-                <p class="error">{{ $errors->first('date') }}</p>
-            @enderror
-        </div>
         <div.form-group>
             {!! NoCaptcha::display() !!}
             @if ($errors->has('g-recaptcha-response'))

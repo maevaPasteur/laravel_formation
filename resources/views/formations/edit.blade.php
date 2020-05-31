@@ -30,13 +30,6 @@
                 <p class="error">{{ $errors->first('content') }}</p>
             @enderror
         </div>
-        <div class="form-group">
-            <label for="date">Date du début de la formation</label>
-            <input name="date" id="date" value="{{ $formation->date }}" type="date" class="@error('date') is-invalid @enderror">
-            @error('date')
-                <p class="error">{{ $errors->first('date') }}</p>
-            @enderror
-        </div>
         <button type="submit">Mettre à jour ma formation</button>
     </form>
 @endsection
