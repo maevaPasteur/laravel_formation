@@ -12,7 +12,7 @@ class Session extends Model
 
     public function formation()
     {
-        return $this->morphTo();
+        return $this->belongsTo('App\Formation');
     }
 
     public function classrooms()
@@ -20,4 +20,8 @@ class Session extends Model
         return $this->morphTo();
     }
 
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
+    }
 }

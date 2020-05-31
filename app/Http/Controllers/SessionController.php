@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Session;
 use App\Formation;
+use App\SessionUser;
+use App\User;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
@@ -31,7 +33,8 @@ class SessionController extends Controller
      */
     public function create()
     {
-        //
+        $sessions = Session::all();
+        return view('sessions.index', compact('sessions'));
     }
 
     /**
@@ -61,8 +64,8 @@ class SessionController extends Controller
      */
     public function show(Session $session)
     {
-        $sessions = Session::all();
-        return view('sessions.index', compact('sessions'));
+        $formation = Formation::find($session->formation_id)->formation;
+        return view('sessions.show', compact('session'));
     }
 
     /**
@@ -97,5 +100,17 @@ class SessionController extends Controller
     public function destroy(Session $session)
     {
         //
+    }
+
+    /**
+     * S'inscrire à une session
+     */
+    public function inscription(Session $session) {
+        $session_user = new SessionUser;
+        $session_user->session_id = $session->id;
+        $session_user->user_id = auth()->user()->id;
+        $session_user->save();
+
+        return redirect()->route('sessions.show', $session->id);
     }
 }

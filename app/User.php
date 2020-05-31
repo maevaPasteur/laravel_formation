@@ -37,8 +37,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function formations()
-    {
+    public function formations() {
         return $this->hasMany('App\Formation');
+    }
+
+    public function sessions() {
+        return $this->belongsToMany('App\Session');
     }
 }

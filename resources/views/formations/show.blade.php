@@ -17,13 +17,10 @@
     </form>
     @endcan
 
-
-    <br><br><br>
-
     <h3>La liste des sessions</h3>
     <ul>
         @foreach($sessions as $session)
-            <li>{{ $session->start }}</li>
+            <li>{{ $session->start }}</li><button>S'inscrire</button>
         @endforeach
     </ul>
 
