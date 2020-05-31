@@ -6,7 +6,7 @@
     <p>Formation proposée par {{  $formation->user->name }}</p>
 
     @can('update', $formation)
-    <a href="{{ route('formations.edit', $formation) }}">Modifier la formation</a>
+    <a class="btn" href="{{ route('formations.edit', $formation) }}">Modifier la formation</a>
     @endcan
 
     @can('delete', $formation)
@@ -16,5 +16,37 @@
         <button type="submit">Supprimer</button>
     </form>
     @endcan
+
+
+    <br><br><br>
+
+    <h3>La liste des sessions</h3>
+
+
+    <br><br><br>
+
+    <h3>AJouter une session</h3>
+    <form action="{{ route('sessions.store', $formation) }}" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="start">Date de la session</label>
+            <input name="start" id="start" type="date" class="@error('start') is-invalid @enderror">
+            @error('start')
+                <p class="error">{{ $errors->first('start') }}</p>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="classroom_id">Choix de la salle</label>
+            <select name="classroom_id" id="classroom_id" class="@error('classroom_id') is-invalid @enderror">
+                @foreach($classrooms as $classroom)
+                    <option value="{{ $classroom->id }}">{{ $classroom->name }} - {{ $classroom->places }} places</option>
+                @endforeach
+            </select>
+            @error('classroom_id')
+                <p class="error">{{ $errors->first('classroom_id') }}</p>
+            @enderror
+        </div>
+        <button type="submit">Validé</button>
+    </form>
 
 @endsection

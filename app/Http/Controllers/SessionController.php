@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Session;
+use App\Formation;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +40,20 @@ class SessionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Formation $formation)
     {
-        //
+        request()->validate([
+            'start' => 'required',
+            'id_classroom' => 'required'
+        ]);
+
+        $session = new Session();
+        $session->start = request('start');
+        $session->id_classroom = request('id_classroom');
+
+        $formation->sessions()->save($session);
+
+        return redirect()->route('formations.show', $formation->id);
     }
 
     /**

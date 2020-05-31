@@ -12,4 +12,9 @@ class Formation extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function sessions()
+    {
+    return $this->morphMany('App\Session', 'formation')->lastest();
+    }
 }

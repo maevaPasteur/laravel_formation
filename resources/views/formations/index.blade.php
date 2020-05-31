@@ -9,7 +9,7 @@
                     <a href="{{ route('formations.show', $formation)  }}">
                         <h2>Formation en {{ $formation->title  }}</h2>
                         <p>{{ $formation->description  }}</p>
-                        <button>Voir les prochaines sessions</button>
+                        <button>Détail de la formation</button>
                     </a>
                 </article>
             </li>

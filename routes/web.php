@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'FormationController@index')->name('formations.index');
 Route::resource('formations', 'FormationController')->except(['index']);
 
+Route::post('/sessions/{formation}', 'SessionController@store')->name('sessions.store');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

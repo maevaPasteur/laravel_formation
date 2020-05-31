@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classroom;
 use App\Formation;
 use Illuminate\Http\Request;
 
@@ -48,8 +49,6 @@ class FormationController extends Controller
             'content' => 'required|min:30',
             'g-recaptcha-response' => 'required|captcha'
         ]);
-
-
         $formation = auth()->user()->formations()->create([
             'title' => $request->title,
             'description' => $request->description,
@@ -67,7 +66,8 @@ class FormationController extends Controller
      */
     public function show(Formation $formation)
     {
-        return view('formations.show', compact('formation'));
+        $classrooms = Classroom::all();
+        return view('formations.show', compact('formation', 'classrooms'));
     }
 
     /**
