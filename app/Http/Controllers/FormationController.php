@@ -46,8 +46,7 @@ class FormationController extends Controller
         $request->validate([
             'title' => 'required|min:3',
             'description' => 'required|min:10',
-            'content' => 'required|min:30',
-            'g-recaptcha-response' => 'required|captcha'
+            'content' => 'required|min:30'
         ]);
         $formation = auth()->user()->formations()->create([
             'title' => $request->title,
