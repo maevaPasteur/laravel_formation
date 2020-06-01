@@ -24,9 +24,22 @@ Route::post('formations/{formation}', 'SessionController@store')->name('sessions
 Route::get('sessions/{session}', 'SessionController@show')->name('sessions.show');
 Route::get('sessions/inscription/{session}', 'SessionController@inscription')->name('sessions.inscription');
 
+// Profile
+Route::get('profile', 'ProfileController@index')->name('profile.index');
+Route::resource('profile', 'ProfileController');
+
 // Home
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Classrooms
 Route::get('/classrooms', 'ClassroomController@index')->name('classrooms.index');
 Route::post('/classrooms', 'ClassroomController@store')->name('classrooms.store');
+
+// Categories
+Route::get('/categories', 'CategoryController@index')->name('categories.index');
+Route::post('/categories', 'CategoryController@store')->name('categories.store');
+
+// Users
+Route::get('/users', 'UserController@index')->name('users.index');
+
+Auth::routes();

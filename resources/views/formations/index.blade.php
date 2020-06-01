@@ -11,20 +11,32 @@
         <img src="./images/background.jpg" alt="organisme de formation">
     </section>
     <section class="wrapper">
-        <h1>La liste des formations</h1>
-        <ul class="list-formations">
-            @foreach($formations as $formation)
-                <li>
-                    <article>
-                        <a href="{{ route('formations.show', $formation)  }}">
-                            <h2>Formation en {{ $formation->title  }}</h2>
-                            <p>{{ $formation->description  }}</p>
-                            <button>Détail de la formation</button>
-                        </a>
-                    </article>
-                </li>
-            @endforeach
-        </ul>
+        @can('create-formation')
+            <h1>La liste des formations</h1>
+            <ul class="list-formations">
+                @foreach($formations as $formation)
+                    <li>
+                        <article>
+                            <a href="{{ route('formations.show', $formation)  }}">
+                                <h2>Formation en {{ $formation->title  }}</h2>
+                                <h3>
+                                    Catégorie(s) :
+                                    @foreach($formation->categories as $category)
+                                        {{ $category->name }} |
+                                    @endforeach
+                                </h3>
+                                <p>{{ $formation->description  }}</p>
+                                <button>Détail de la formation</button>
+                            </a>
+                        </article>
+                    </li>
+                @endforeach
+            </ul>
+        @endcan
+
+        @cannot('create-formation')
+            <p>Ea cupidatat eu pariatur velit aliqua dolor amet duis exercitation eiusmod. Proident esse mollit tempor ex dolor cupidatat dolor anim id reprehenderit anim deserunt. Officia amet aliqua mollit voluptate ullamco est Lorem in irure. Sint occaecat quis tempor ullamco duis qui non exercitation. Laboris exercitation est laboris aliqua labore laboris laboris tempor.</p>
+        @endcannot
         {{ $formations->links()  }}
     </section>
 
