@@ -58,6 +58,22 @@ ul {
   list-style-type: none;
 }
 
+.d-flex {
+  display: flex;
+}
+
+form.d-flex {
+  align-items: flex-end;
+}
+
+form.d-flex .form-group {
+  margin-right: 20px;
+}
+
+form.d-flex .btn {
+  height: 37px;
+}
+
 .wrapper {
   width: calc(100% - 40px);
   padding: 0 20px 40px;
@@ -92,6 +108,7 @@ main {
   font-weight: 500;
   cursor: pointer;
   line-height: 1;
+  display: inline-block;
 }
 
 .btn.yellow {
@@ -121,7 +138,9 @@ main {
   font-weight: 400;
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea,
+.form-group select {
   background: #fff;
   border: 0;
   width: 200px;
@@ -166,6 +185,10 @@ header ul li:first-of-type {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.container_formations > ul a,
+.container_formations > ul article {
   height: 100%;
 }
 
