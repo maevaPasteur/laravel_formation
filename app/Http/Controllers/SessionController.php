@@ -23,7 +23,8 @@ class SessionController extends Controller
      */
     public function index()
     {
-        //
+        $sessions = Session::all();
+        return view('sessions.index', compact('sessions'));
     }
 
     /**
@@ -104,7 +105,11 @@ class SessionController extends Controller
      */
     public function destroy(Session $session)
     {
-        //
+        $this->authorize('delete', $session);
+
+        Session::destroy($session->id);
+
+        return redirect('/sessions');
     }
 
     /**
