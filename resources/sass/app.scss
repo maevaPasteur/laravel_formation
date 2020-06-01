@@ -45,7 +45,18 @@ a {
 ul {
     list-style-type: none;
 }
-
+.d-flex {
+    display: flex;
+}
+form.d-flex  {
+    align-items: flex-end;
+    .form-group {
+        margin-right: 20px;
+    }
+    .btn {
+        height: 37px;
+    }
+}
 
 .wrapper {
     width: calc(100% - 40px);
@@ -78,6 +89,7 @@ main {
     font-weight: 500;
     cursor: pointer;
     line-height: 1;
+    display: inline-block;
     &.yellow {
         background: $yellow;
         color: #fff;
@@ -103,7 +115,7 @@ main {
         font-size: 12px;
         font-weight: 400;
     }
-    input {
+    input, textarea, select {
         background: #fff;
         border: 0;
         width: 200px;
