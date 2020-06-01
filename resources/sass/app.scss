@@ -4,6 +4,7 @@
 
 // Variables
 @import 'variables';
+@import 'formation';
 
 * {
     margin: 0;
@@ -230,5 +231,14 @@ header ul {
     }
     h1 {
         margin-bottom: 40px;
+    }
+}
+
+.ctas {
+    display: flex;
+    margin: 20px 0;
+    
+    a {
+        margin-right: 20px;
     }
 }
