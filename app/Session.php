@@ -15,9 +15,9 @@ class Session extends Model
         return $this->belongsTo('App\Formation');
     }
 
-    public function classrooms()
+    public function classroom()
     {
-        return $this->morphTo();
+        return $this->belongsTo('App\Classroom');
     }
 
     public function users()

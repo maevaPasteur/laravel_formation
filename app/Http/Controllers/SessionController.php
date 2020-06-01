@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Classroom;
 use App\Session;
 use App\Formation;
 use App\SessionUser;
@@ -64,7 +65,12 @@ class SessionController extends Controller
     public function show(Session $session)
     {
         $formation = Formation::find($session->formation_id)->formation;
-        return view('sessions.show', compact('session'));
+        $classroom = Formation::find($session->classroom_id)->classroom;
+        $date = date('d/m/Y', strtotime($session->start));
+
+        $places_available = $session->classroom->places - $session->users->count();
+
+        return view('sessions.show', compact('session', 'date', 'formation', 'classroom', 'places_available'));
     }
 
     /**

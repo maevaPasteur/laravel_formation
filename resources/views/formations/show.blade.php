@@ -3,26 +3,31 @@
 
 @section('content')
     <div class="wrapper container_formations-detail">
+
         <h2>Formation en {{ $formation->title  }}</h2>
-        <h3>Catégorie(s) de la formation :
-            @foreach($formation->categories as $category)
-                {{ $category->name }} |
-            @endforeach
-        </h3>
-        <p>{{ $formation->description  }}</p>
-        <p>Formation proposée par {{  $formation->user->name }}</p>
 
-        @can('update', $formation)
-            <a class="btn dark" href="{{ route('formations.edit', $formation) }}">Modifier la formation</a>
-        @endcan
+        @foreach($formation->categories as $category)
+            <span class="tag">{{ $category->name }}</span>
+        @endforeach
 
-        @can('delete', $formation)
-            <form action="{{ route('formations.destroy', $formation) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn red">Supprimer</button>
-            </form>
-        @endcan
+        <p class="fw-4">{{ $formation->description  }}</p>
+        <br>
+        <p>{{ $formation->content }}</p>
+        <p class="mb-20">Formation proposée par {{  $formation->user->name }}</p>
+
+        <div class="d-flex">
+            @can('update', $formation)
+                <a class="btn dark mr-20" href="{{ route('formations.edit', $formation) }}">Modifier la formation</a>
+            @endcan
+            @can('delete', $formation)
+                <form action="{{ route('formations.destroy', $formation) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn red">Supprimer</button>
+                </form>
+            @endcan
+        </div>
+
 
         <br><br>
 
@@ -53,16 +58,27 @@
 
         <br><br>
 
-        <h3>La liste des sessions</h3>
-        <ul>
-            @foreach($sessions as $session)
-                <li>
-                    <a href="{{ url(route('sessions.show', ['session'=>$session])) }}">
-                        {{ $session->start }}
-                    </a>
-                </li>
-            @endforeach
-        </ul>
+        @if($sessions->count() > 0)
+            <h3>Les sessions à venir :</h3>
+            <ul class="list-sessions">
+                @foreach($sessions as $session)
+                    <li>
+                        <a href="{{ url(route('sessions.show', ['session'=>$session])) }}">
+                            <p class="fw-4">Le <?php echo(date('d/m/Y', strtotime($session->start))) ?></p>
+                            <p>Durée : 1 journée</p>
+                            @if($session->users->count() === 0)
+                                <p class="mb-20">Sois le premier à t'inscrire !</p>
+                            @elseif($session->users->count() == 1)
+                                <p class="mb-20">Déjà 1 inscrit</p>
+                            @else
+                                <p class="mb-20">Déjà {{ $session->users->count() }} inscrits</p>
+                            @endif
+                            <button class="btn purple">En savoir +</button>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
 
     </div>
 
