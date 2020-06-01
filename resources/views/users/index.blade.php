@@ -15,8 +15,6 @@
                     @endif
 
                     <ul>
-                        {{ $test }}
-                        {{ $message }}
                         @foreach ($users as $user)
                             <li>{{$user->name}}, {{ $user->role }}</li>
                         @endforeach
