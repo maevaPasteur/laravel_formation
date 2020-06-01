@@ -5,7 +5,7 @@
         font-size: 12px;
         font-weight: 400;
     }
-    input, textarea, select {
+    input:not([type="checkbox"]), textarea, select {
         background: #fff;
         border: 0;
         width: 200px;
