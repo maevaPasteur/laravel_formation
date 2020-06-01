@@ -24,4 +24,14 @@ class Session extends Model
     {
         return $this->belongsToMany('App\User');
     }
+
+    public function session_users()
+    {
+        return $this->hasMany('App\SessionUser');
+    }
+
+    public function getNote()
+    {
+        return "STFU" ;
+    }
 }

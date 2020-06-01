@@ -9,7 +9,7 @@
         <table class="mb-20 table-sessions">
             <tr>
                 <td>Date</td>
-                <td>{{ $date }}</td>
+                <td>{{ $date_beautify }}</td>
             </tr>
             <tr>
                 <td>Enseignant</td>
@@ -55,9 +55,37 @@
         @if($session->users->count() > 0 and auth()->user() and auth()->user()->id === $teacher->id)
             <h3>Les inscrits :</h3>
             <ul class="list">
+                @if($current_time > $date)
+                    @can('is-teacher')
+                        <form action="{{ route('sessions.updateNote', $session) }}" method="POST">
+                            @csrf
+                            @method('patch')
+                    @endcan
+                @endif
+
                 @foreach($session->users as $user)
-                    <li>{{ $user->name }}</li>
+                <li>
+                    <div class="form-group form-students-sessions">
+                        <p>{{ $user->name }}</p>
+                            @if($current_time > $date)
+                                @can('is-teacher')
+                                    <input name="note_{{ $user->id }}" id="note_{{ $user->id }}" type="number" placeholder="Donnez une note" value="{{ \Helper::getNote($session->id, $user->id )}}" min="0" max="20" class="@error('note') is-invalid @enderror">
+                                    @error('note')
+                                        <p class="error">{{ $errors->first('note') }}</p>
+                                    @enderror
+                                @endcan
+                            @endif
+                    </div>
+                </li>
                 @endforeach
+
+                @if($current_time > $date)
+                    @can('is-teacher')
+                        <br />
+                        <button class="btn dark" type="submit">Enregistrer les notes</button>
+                        </form>
+                    @endcan
+                @endif
             </ul>
         @endif
     </div>
