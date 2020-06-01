@@ -23,7 +23,8 @@ class SessionController extends Controller
      */
     public function index()
     {
-        //
+        $sessions = Session::all();
+        return view('sessions.index', compact('sessions'));
     }
 
     /**
@@ -64,8 +65,8 @@ class SessionController extends Controller
      */
     public function show(Session $session)
     {
-        $formation = Formation::find($session->formation_id)->formation;
-        $classroom = Formation::find($session->classroom_id)->classroom;
+        $formation = $session->formation;
+        $classroom = $session->classroom;
         $date = date('d/m/Y', strtotime($session->start));
 
         $places_available = $session->classroom->places - $session->users->count();
@@ -104,7 +105,11 @@ class SessionController extends Controller
      */
     public function destroy(Session $session)
     {
-        //
+        $this->authorize('delete', $session);
+
+        Session::destroy($session->id);
+
+        return redirect('/sessions');
     }
 
     /**

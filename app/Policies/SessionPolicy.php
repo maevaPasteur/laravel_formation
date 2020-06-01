@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Formation;
+use App\Session;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class FormationPolicy
+class SessionPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class FormationPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Formation  $formation
+     * @param  \App\Session  $session
      * @return mixed
      */
-    public function view(User $user, Formation $formation)
+    public function view(User $user, Session $session)
     {
         //
     }
@@ -48,34 +48,34 @@ class FormationPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Formation  $formation
+     * @param  \App\Session  $session
      * @return mixed
      */
-    public function update(User $user, Formation $formation)
+    public function update(User $user, Session $session)
     {
-        return $user->id == $formation->user->id;
+        //
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Formation  $formation
+     * @param  \App\Session  $session
      * @return mixed
      */
-    public function delete(User $user, Formation $formation)
+    public function delete(User $user, Session $session)
     {
-        return $user->id == $formation->user->id || $user->role === "admin";
+        return $user->id == $session->formation->user->id || $user->role === "admin";
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Formation  $formation
+     * @param  \App\Session  $session
      * @return mixed
      */
-    public function restore(User $user, Formation $formation)
+    public function restore(User $user, Session $session)
     {
         //
     }
@@ -84,10 +84,10 @@ class FormationPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\Formation  $formation
+     * @param  \App\Session  $session
      * @return mixed
      */
-    public function forceDelete(User $user, Formation $formation)
+    public function forceDelete(User $user, Session $session)
     {
         //
     }

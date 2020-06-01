@@ -47,6 +47,12 @@
                         @endcan
                         @can('is-admin')
                             <li>
+                                <a class="btn" href="{{ route('sessions.index') }}">Sessions</a>
+                            </li>
+                            <li>
+                                <a class="btn" href="{{ route('classrooms.index') }}">Classrooms</a>
+                            </li>
+                            <li>
                                 <a class="btn" href="{{ route('users.index') }}">Users</a>
                             </li>
                             <li>
