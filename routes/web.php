@@ -32,7 +32,9 @@ Route::resource('profile', 'ProfileController');
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Classrooms
-Route::get('/classrooms', 'ClassroomController@index')->name('classrooms.index');
+Route::middleware('can:is-admin')->group(function () {
+    Route::get('/classrooms', 'ClassroomController@index')->name('classrooms.index');
+});
 Route::post('/classrooms', 'ClassroomController@store')->name('classrooms.store');
 
 // Categories

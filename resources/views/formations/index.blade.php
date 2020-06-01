@@ -11,7 +11,7 @@
         <img src="./images/background.jpg" alt="organisme de formation">
     </section>
     <section class="wrapper">
-        @can('create-formation')
+        @can('is-admin')
             <h1>La liste des formations</h1>
             <ul class="list-formations">
                 @foreach($formations as $formation)
@@ -34,7 +34,7 @@
             </ul>
         @endcan
 
-        @cannot('create-formation')
+        @cannot('is-admin')
             <p>Ea cupidatat eu pariatur velit aliqua dolor amet duis exercitation eiusmod. Proident esse mollit tempor ex dolor cupidatat dolor anim id reprehenderit anim deserunt. Officia amet aliqua mollit voluptate ullamco est Lorem in irure. Sint occaecat quis tempor ullamco duis qui non exercitation. Laboris exercitation est laboris aliqua labore laboris laboris tempor.</p>
         @endcannot
         {{ $formations->links()  }}
