@@ -166,6 +166,10 @@ header ul li:first-of-type {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.container_formations > ul a,
+.container_formations > ul article {
   height: 100%;
 }
 
