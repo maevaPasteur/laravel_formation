@@ -1,0 +1,25 @@
+.form-group {
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 12px;
+        font-weight: 400;
+    }
+    input, textarea, select {
+        background: #fff;
+        border: 0;
+        width: 200px;
+        padding: 10px 15px;
+        border-radius: 5px;
+        outline: 0;
+    }
+}
+form.d-flex  {
+     align-items: flex-end;
+     .form-group {
+         margin-right: 20px;
+     }
+     .btn {
+         height: 37px;
+     }
+ }

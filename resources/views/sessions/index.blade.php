@@ -1,16 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>La liste des sessions</h1>
-    <ul class="list-formations">
+    <h1>Sessions</h1>
+    <ul class="list-sessions">
         @foreach($sessions as $session)
             <li>
                 <article>
                     <h2>Le : {{ $session->start }}</h2>
+                    <h3>Formation : {{ $session->formation->title }}</h3>
+                    <h3>Places restantes : {{ $session->classroom->places - $session->users->count() }}</h3>
                     <p>Inscripitons ouvertes ? {{ $session->open }}</p>
+                    @can('delete', $session)
+                        <form action="{{ route('sessions.destroy', $session) }}" method="post">
+                            @method('delete')
+                            @csrf
+                            <button type="submit" class="btn red">Supprimer</button>
+                        </form>
+                    @endcan
                 </article>
             </li>
         @endforeach
     </ul>
-    {{ $formations->links()  }}
 @endsection

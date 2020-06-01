@@ -1,0 +1,16 @@
+
+.page-profile {
+    form {
+        display: flex;
+        align-items: flex-end;
+    }
+    .form-group {
+        margin-right: 20px;
+    }
+    .btn {
+        flex-shrink: 0;
+    }
+    h1 {
+        margin-bottom: 40px;
+    }
+}

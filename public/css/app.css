@@ -58,6 +58,15 @@ ul {
   list-style-type: none;
 }
 
+body:not(.page-home) main {
+  padding-top: 120px;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
 .d-flex {
   display: flex;
 }
@@ -78,18 +87,6 @@ ul {
   font-weight: 400;
 }
 
-form.d-flex {
-  align-items: flex-end;
-}
-
-form.d-flex .form-group {
-  margin-right: 20px;
-}
-
-form.d-flex .btn {
-  height: 37px;
-}
-
 .wrapper {
   width: calc(100% - 40px);
   padding: 0 20px 40px;
@@ -100,51 +97,6 @@ form.d-flex .btn {
 .list {
   list-style-type: disc;
   margin-left: 40px;
-}
-
-header {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 2;
-}
-
-body:not(.page-home) main {
-  padding-top: 120px;
-}
-
-main {
-  position: relative;
-  z-index: 1;
-}
-
-table {
-  background: #D6D5DD;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-table td {
-  padding: 10px 10px 10px 0;
-}
-
-table tr:last-of-type td {
-  padding-bottom: 0;
-}
-
-table tr:first-of-type td {
-  padding-top: 0;
-}
-
-table td:first-of-type {
-  font-weight: 400;
-  padding-right: 40px;
-}
-
-table tr:first-of-type td:last-of-type {
-  font-weight: 500;
-  color: #FF0E55;
 }
 
 .btn {
@@ -198,18 +150,44 @@ table tr:first-of-type td:last-of-type {
   outline: 0;
 }
 
-header ul {
-  display: flex;
-  padding: 20px 40px;
-  font-weight: 500;
+form.d-flex {
+  align-items: flex-end;
 }
 
-header ul li:not(:last-of-type) {
+form.d-flex .form-group {
   margin-right: 20px;
 }
 
-header ul li:first-of-type {
-  margin-right: auto;
+form.d-flex .btn {
+  height: 37px;
+}
+
+table {
+  background: #D6D5DD;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+table td {
+  padding: 10px 10px 10px 0;
+}
+
+table tr:last-of-type td {
+  padding-bottom: 0;
+}
+
+table tr:first-of-type td {
+  padding-top: 0;
+}
+
+table td:first-of-type {
+  font-weight: 400;
+  padding-right: 40px;
+}
+
+table:not(.container_calendar) tr:first-of-type td:last-of-type {
+  font-weight: 500;
+  color: #FF0E55;
 }
 
 .container_formations h2 {
@@ -269,9 +247,26 @@ header ul li:first-of-type {
   margin-top: 10px;
 }
 
-.container {
-  max-width: 80%;
-  margin: auto;
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+header ul {
+  display: flex;
+  padding: 20px 40px;
+  font-weight: 500;
+}
+
+header ul li:not(:last-of-type) {
+  margin-right: 20px;
+}
+
+header ul li:first-of-type {
+  margin-right: auto;
 }
 
 .container_presentation {
@@ -305,23 +300,6 @@ header ul li:first-of-type {
   line-height: 1;
 }
 
-.page-profile form {
-  display: flex;
-  align-items: flex-end;
-}
-
-.page-profile .form-group {
-  margin-right: 20px;
-}
-
-.page-profile .btn {
-  flex-shrink: 0;
-}
-
-.page-profile h1 {
-  margin-bottom: 40px;
-}
-
 .list-sessions {
   display: flex;
   flex-wrap: wrap;
@@ -343,12 +321,78 @@ header ul li:first-of-type {
   padding: 20px;
 }
 
-.ctas {
+.page-profile form {
   display: flex;
-  margin: 20px 0;
+  align-items: flex-end;
 }
 
-.ctas a {
+.page-profile .form-group {
   margin-right: 20px;
+}
+
+.page-profile .btn {
+  flex-shrink: 0;
+}
+
+.page-profile h1 {
+  margin-bottom: 40px;
+}
+
+.container_calendar {
+  width: 100%;
+  padding: 0;
+  border-collapse: collapse;
+  overflow: hidden;
+  background: #fff;
+}
+
+.container_calendar thead {
+  background: #fff;
+}
+
+.container_calendar thead th {
+  padding: 10px;
+}
+
+.container_calendar thead tr:first-of-type th {
+  padding-top: 20px;
+}
+
+.container_calendar thead tr:last-of-type th {
+  font-size: 14px;
+  font-weight: 500;
+  background: #D6D5DD;
+}
+
+.container_calendar td {
+  padding: 10px;
+  border: solid 1px #DEDDE4;
+  width: calc(100% / 7);
+}
+
+.container_calendar tr:first-of-type td {
+  padding-top: 10px;
+  border-top: 0;
+}
+
+.container_calendar tr:last-of-type td {
+  padding-bottom: 10px;
+  border-bottom: 0;
+}
+
+.container_calendar td:first-of-type {
+  padding-left: 20px;
+  border-left: 0;
+}
+
+.container_calendar td:nth-of-type(7) {
+  padding-right: 20px;
+  border-right: 0;
+}
+
+.container_calendar .headcal {
+  font-size: 20px;
+  font-weight: 100;
+  padding: 0 20px;
 }
 

@@ -1,0 +1,19 @@
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+header ul {
+    display: flex;
+    padding: 20px 40px;
+    font-weight: 500;
+    li:not(:last-of-type) {
+        margin-right: 20px;
+    }
+    li:first-of-type {
+        margin-right: auto;
+    }
+}

@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    line-height: 1.3;
+    font-size: 16px;
+    background: $lightGrey;
+}
+button {
+    border: 0;
+    background: none;
+}
+h1, h2, h3, h4, h5 {
+    font-family: 'Crete Round', serif;
+}
+h1, h2, h3 {
+    margin-bottom: 20px;
+}
+h3, h4 {
+    margin-bottom: 10px;
+}
+h1 {
+    font-size: 40px;
+}
+h2 {
+    font-size: 30px;
+}
+h3 {
+    font-size: 20px;
+}
+a {
+    color: inherit;
+    text-decoration: none;
+}
+ul {
+    list-style-type: none;
+}
+
+body:not(.page-home) main {
+    padding-top: 120px;
+}
+main {
+    position: relative;
+    z-index: 1;
+}

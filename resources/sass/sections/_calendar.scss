@@ -1,0 +1,50 @@
+.container_calendar{
+    width: 100%;
+    padding: 0;
+    border-collapse: collapse;
+    overflow: hidden;
+    background: #fff;
+    thead {
+        background: #fff;
+        th {
+            padding: 10px;
+        }
+        tr:first-of-type th {
+            padding-top: 20px;
+        }
+        tr:last-of-type th {
+            font-size: 14px;
+            font-weight: 500;
+            background: $mediumGrey;
+        }
+    }
+    td {
+        padding: 10px;
+        border: solid 1px $lightGrey;
+        width: calc(100% / 7);
+    }
+    tr:first-of-type td {
+        padding-top: 10px;
+        border-top: 0;
+    }
+    tr:last-of-type td {
+        padding-bottom: 10px;
+        border-bottom: 0;
+    }
+    td:first-of-type {
+        padding-left: 20px;
+        border-left: 0;
+    }
+    td:nth-of-type(7) {
+        padding-right: 20px;
+        border-right: 0;
+    }
+
+    .headcal {
+        font-size: 20px;
+        font-weight: 100;
+        padding: 0 20px;
+    }
+}
+
+
