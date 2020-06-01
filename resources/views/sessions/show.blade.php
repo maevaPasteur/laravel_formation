@@ -52,15 +52,13 @@
                 @endif
             @endcan
         </div>
-        @if($session->users->count() > 0)
+        @if($session->users->count() > 0 and auth()->user() and auth()->user()->id === $teacher->id)
             <h3>Les inscrits :</h3>
             <ul class="list">
                 @foreach($session->users as $user)
                     <li>{{ $user->name }}</li>
                 @endforeach
             </ul>
-        @else
-            <h3>Personne n'est inscrit pour le moment 🙀</h3>
         @endif
     </div>
 

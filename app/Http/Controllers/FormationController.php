@@ -81,7 +81,8 @@ class FormationController extends Controller
         $all_sessions = Session::all();
         $user_sessions = array();
         $formations = Formation::all();
-        foreach ($formations->where('user_id', auth()->user()->id) as $f)
+
+        foreach ($formations->where('user_id', $formation->user->id) as $f)
         {
             foreach ($all_sessions->where('formation_id', $f->id) as $i)
             {

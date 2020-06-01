@@ -39,7 +39,7 @@
                                 <p class="fw-4">Le <?php echo(date('d/m/Y', strtotime($session->start))) ?></p>
                                 <p>Durée : 1 journée</p>
                                 @if($session->users->count() === 0)
-                                    @if (auth()->user()->id === $formation->user->id)
+                                    @if ($formation->user->id === $formation->user->id)
                                         <p class="mb-20">Aucune inscription</p>
                                     @else
                                         <p class="mb-20">Sois le premier à t'inscrire !</p>
@@ -60,7 +60,7 @@
         </section>
 
 
-        @if (auth()->user()->id === $formation->user->id)
+        @if (auth()->user() and auth()->user()->id === $formation->user->id)
             <section class="mb-40">
                 <h2>Créer une nouvelle session</h2>
                 <p class="mb-40">Sélectionne la salle de classe à la date souhaitée.<br>Une nouvelle session sera automatiquement ajoutée.</p>
