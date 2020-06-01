@@ -27,7 +27,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index', compact('users'));
+        $collection = collect(['student', 'teacher', 'admin']);
+        return view('users.index', compact('users', 'collection'));
     }
 
     /**
@@ -80,9 +81,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $user->role = $request->input('role');
+        $user->save();
+        return redirect()->route('users.index', $user);
     }
 
     /**
@@ -94,5 +97,20 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Set an user to validate. He gan now go on the application
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function validateUser($user)
+    {
+        $user = User::find($user);
+        $user->verified = 1;
+        $user->save();
+    
+        return redirect()->route('users.index');
     }
 }

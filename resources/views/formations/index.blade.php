@@ -16,7 +16,9 @@
             @foreach($formations as $formation)
                 <li>
                     <article>
-                        <a href="{{ route('formations.show', $formation)  }}">
+                            @can('verified', auth()->user())
+                                <a href="{{ route('formations.show', $formation)  }}">
+                            @endcan
                             <h3>Formation en {{ $formation->title  }}</h3>
                             @if (count($formation->categories) > 0)
                                 <p>Catégorie(s) :
@@ -26,8 +28,10 @@
                                 </p>
                             @endif
                             <p>{{ $formation->description }}</p>
-                            <button class="btn yellow">Voir la formation</button>
-                        </a>
+                            @can('verified', auth()->user())
+                                <button class="btn yellow">Voir la formation</button>
+                            </a>
+                        @endcan
                     </article>
                 </li>
             @endforeach

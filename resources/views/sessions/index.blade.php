@@ -10,13 +10,14 @@
                     <h3>Formation : {{ $session->formation->title }}</h3>
                     <h3>Places restantes : {{ $session->classroom->places - $session->users->count() }}</h3>
                     <p>Inscripitons ouvertes ? {{ $session->open }}</p>
-                    @can('delete', $session)
+                    <a href={{ url("/sessions/{$session->id}") }}>En savoir +</a>
+                    {{-- @can('delete', $session)
                         <form action="{{ route('sessions.destroy', $session) }}" method="post">
                             @method('delete')
                             @csrf
                             <button type="submit" class="btn red">Supprimer</button>
                         </form>
-                    @endcan
+                    @endcan --}}
                 </article>
             </li>
         @endforeach
