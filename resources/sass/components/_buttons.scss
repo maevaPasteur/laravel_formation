@@ -1,0 +1,28 @@
+.btn {
+    padding: 10px 15px;
+    background: #fff;
+    border-radius: 5px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    font-weight: 500;
+    cursor: pointer;
+    line-height: 1;
+    display: inline-block;
+    &.yellow {
+        background: $yellow;
+        color: #fff;
+    }
+    &.purple {
+        background: $purple;
+        color: #fff;
+    }
+    &.red {
+        background: $red;
+        color: #fff;
+    }
+    &.dark {
+        background: $darkBlue;
+        color: #fff;
+    }
+}

@@ -44,6 +44,9 @@
             @endif
         </div>
 
+        <p>{{ $session->formation->user->id }}</p>
+        <p>{{ $session->classroom->id }}</p>
+
 
         @if($session->users->count() > 0)
             <h3>Liste des inscrits</h3>

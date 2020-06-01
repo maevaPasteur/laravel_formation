@@ -118,4 +118,5 @@ class SessionController extends Controller
 
         return redirect()->route('sessions.show', $session->id);
     }
+
 }

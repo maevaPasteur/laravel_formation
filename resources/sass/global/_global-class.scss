@@ -1,0 +1,26 @@
+.d-flex {
+    display: flex;
+}
+.mr-20 {
+    margin-right: 20px;
+}
+.mb-20 {
+    margin-bottom: 20px;
+}
+.mb-40 {
+    margin-bottom: 40px;
+}
+.fw-4 {
+    font-weight: 400;
+}
+
+.wrapper {
+    width: calc(100% - 40px);
+    padding: 0 20px 40px;
+    max-width: 1000px;
+    margin: auto;
+}
+.list {
+    list-style-type: disc;
+    margin-left: 40px;
+}
