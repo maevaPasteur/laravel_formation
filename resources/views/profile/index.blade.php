@@ -201,7 +201,9 @@
                                <li>
                                    <a href="{{ url(route('sessions.show', ['session'=>$session])) }}">
                                        <p class="fw-4">Le <?php echo(date('d/m/Y', strtotime($session->start))) ?></p>
-                                       <p class="mb-20">Durée : 1 journée</p>
+                                       <p>Formation {{ $all_formations->where('id', $session->formation_id)->first()->title }}</p>
+                                       <p>Durée : 1 journée</p>
+                                       <p class="mb-20">{{ $classrooms->where('id', $session->classroom_id)->first()->name }}</p>
                                        <button class="btn yellow">Détail</button>
                                    </a>
                                </li>
