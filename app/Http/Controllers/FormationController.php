@@ -73,7 +73,8 @@ class FormationController extends Controller
     public function show(Formation $formation)
     {
         $classrooms = Classroom::all();
-        $sessions = Session::all();
+        $sessions = Session::all()->where('formation_id', $formation->id);
+
         return view('formations.show', compact('formation', 'classrooms', 'sessions'));
     }
 

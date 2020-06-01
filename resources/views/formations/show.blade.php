@@ -59,8 +59,8 @@
             </section>
         @endif
 
-        @if($sessions->count() > 0)
-            <section class="mb-40">
+        <section class="mb-40">
+            @if($sessions->count() > 0)
                 <h3>Les sessions à venir :</h3>
                 <ul class="list-sessions">
                     @foreach($sessions as $session)
@@ -80,8 +80,10 @@
                         </li>
                     @endforeach
                 </ul>
-            </section>
-        @endif
+            @else
+                <h3>Aucune session n'est actuellement programmée</h3>
+            @endif
+        </section>
     </div>
 
 
