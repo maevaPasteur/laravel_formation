@@ -23,6 +23,9 @@
         padding: 10px;
         border: solid 1px $lightGrey;
         width: calc(100% / 7);
+        &:not(.otherDay) p {
+            display: none;
+        }
     }
     tr:first-of-type td {
         padding-top: 10px;
@@ -112,6 +115,17 @@
     }
     .already {
         font-size: 14px;
+        text-align: center;
+        width: 100%;
+        display: block;
+    }
+    a.already {
+        font-weight: 500;
+        cursor: pointer;
+        transition: color ease .1s;
+        &:hover {
+            color: $purple;
+        }
     }
 }
 

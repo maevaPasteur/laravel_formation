@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Classroom;
+use App\Formation;
+use App\Session;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -20,7 +23,19 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return view('profile.index');
+        $user = auth()->user();
+        $formations = Formation::all()->where('user_id', $user->id);
+        $classrooms = Classroom::all();
+        $all_sessions = Session::all();
+        $sessions = array();
+        foreach ($formations as $formation)
+        {
+            foreach ($all_sessions->where('formation_id', $formation->id) as $session)
+            {
+                array_push($sessions, $session);
+            }
+        }
+        return view('profile.index', compact('user', 'formations', 'sessions', 'classrooms'));
     }
 
     /**
@@ -57,4 +72,5 @@ class ProfileController extends Controller
     {
         //
     }
+
 }

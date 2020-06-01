@@ -35,7 +35,7 @@
                     </article>
                 </li>
             @endforeach
-
+            </ul>
         {{ $formations->links() }}
     </section>
 
