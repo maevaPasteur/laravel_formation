@@ -17,16 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        $test = "Bonjour";
-        $message = "Message";
-
-        if (Gate::allows('create-formation')) {
-            $message = "You are admin";
-        } else {
-            return view('formations.index');
-        }
-
-        return view('users.index', ['users' => $users, 'test'=>$test, 'message'=>$message]);
+        return view('users.index', compact('users'));
     }
 
     /**
