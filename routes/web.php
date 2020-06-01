@@ -30,10 +30,11 @@ Route::middleware('can:verified')->group(function () {
 });
 
 // Profile
+Route::get('profile', 'ProfileController@index')->name('profile.index');
+Route::resource('profile', 'ProfileController', ['only'=> ['index']]);
 Route::middleware('can:verified')->group(function () {
-    Route::get('profile', 'ProfileController@index')->name('profile.index');
     Route::patch('profile/{profile}', 'ProfileController@update')->name('profile.update');
-    Route::resource('profile', 'ProfileController', ['only'=> ['index','update','destroy']]);
+    Route::resource('profile', 'ProfileController', ['only'=> ['update','destroy']]);
 });
 
 

@@ -8,7 +8,7 @@
        <section class="mb-40">
            <h1>Bonjour {{ $user->name }}</h1>
            <h2>Mes informations</h2>
-           <form action="{{ route('profile.update', $user) }}" method="POST">
+           <form class="mb-40" action="{{ route('profile.update', $user) }}" method="POST">
                @csrf
                @method('patch')
                <div class="form-group">
@@ -32,8 +32,13 @@
                    <p class="error">{{ $errors->first('role') }}</p>
                    @enderror
                </div>
-               <button type="submit" class="btn purple">Ok</button>
+               @can(['is-teacher', 'verified'])
+                   <button type="submit" class="btn purple">Ok</button>
+               @endcan
            </form>
+           @if($user->role == 'teacher' and $user->verified == 0)
+               <p>👀 Votre profil est en attende de validation par l'administrateur</p>
+           @endif
        </section>
 
        <?php
@@ -91,104 +96,117 @@
        ?>
 
        @can(['is-teacher'])
-           <section class="mb-14 container_formations">
-               <h2>Mes formations</h2>
-               <ul>
-                   @foreach($formations as $formation)
-                       <li>
-                           <article>
-                               @can('verified', auth()->user())
-                                   <a href="{{ route('formations.show', $formation) }}">
-                                       @endcan
-                                       <h3>Formation en {{ $formation->title }}</h3>
-                                       @if (count($formation->categories) > 0)
-                                           <div class="d-flex">
-                                               @foreach($formation->categories as $category)
-                                                   <span class="tag">{{ $category->name }}</span>
-                                               @endforeach
-                                           </div>
-                                       @endif
-                                       <p>{{ $formation->description }}</p>
-                                       @can('verified', auth()->user())
-                                           <button class="btn yellow">Voir la formation</button>
-                                   </a>
-                               @endcan
-                           </article>
-                       </li>
-                   @endforeach
-               </ul>
-           </section>
-           <section class="mb-40">
-               <h2>Mes sessions</h2>
-               <table class="container_calendar">
-                   <thead class="top">
-                   <tr>
-                       <th colspan="7">
-                           <a href="/profile?month=<?php echo $monthnb - 1; ?>&year=<?php echo $year; ?>"> < </a>
-                           <span class="headcal"><?php echo($month.' '.$year); ?></span>
-                           <a href="/profile?month=<?php echo $monthnb + 1; ?>&year=<?php echo $year; ?>"> > </a>
-                       </th>
-                   </tr>
-                   <tr>
-                       <?php for($i = 1; $i <= 7; $i++){
-                           echo('<th>'.$daytab[$i].'</th>');
-                       }?>
-                   </tr>
-                   </thead>
-                   <tbody>
-                   <?php for($i = 1; $i <= count($calendar); $i++) {
-                       echo('<tr>');
-                       for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++){
-                           if($j-$z+1+(($i*7)-7) == date("j") && $monthnb == date("n") && $year == date("Y")) {
-                               $day_class = 'currentday';
-                               $day_current = $calendar[$i][$j];
-                           } else {
-                               if ( $calendar[$i][$j] == "" ) {
-                                   $day_class = 'jourVide';
-                                   $day_current = '';
-                               } else {
-                                   $jour = $calendar[$i][$j];
-                                   $datecomplete = $year."-".$monthnb."-".$jour;
-                                   $day_class = 'otherDay';
-                                   $day_current = $calendar[$i][$j];
-                               }
-                           }
-                           // Hide days of the week before the 1rst on the month
-                           if($day_current == '') {
-                               echo('<td><p>'.$day_current.'</p></td>');
-                           } else {
-                               $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
-                               $session_date = date_create_from_format('j/m/Y', $session_date_obj);
-                               echo ('<td data-start="'.$session_date->format('Y-m-d').' 00:00:00" class="'.$day_class.'">');
-                               echo('<p>'.$day_current.'</p>');
+           @if($formations->count() > 0)
+               <section class="mb-14 container_formations">
+                   <h2>Mes formations</h2>
+                   <ul>
+                       @foreach($formations as $formation)
+                           <li>
+                               <article>
+                                   @can('verified', auth()->user())
+                                       <a href="{{ route('formations.show', $formation) }}">
+                                           @endcan
+                                           <h3>Formation en {{ $formation->title }}</h3>
+                                           @if (count($formation->categories) > 0)
+                                               <div class="d-flex">
+                                                   @foreach($formation->categories as $category)
+                                                       <span class="tag">{{ $category->name }}</span>
+                                                   @endforeach
+                                               </div>
+                                           @endif
+                                           <p>{{ $formation->description }}</p>
+                                           @can('verified', auth()->user())
+                                               <button class="btn yellow">Voir la formation</button>
+                                       </a>
+                                   @endcan
+                               </article>
+                           </li>
+                       @endforeach
+                   </ul>
+               </section>
+               <section class="mb-40">
+                   <h2>Mes sessions</h2>
+                   @if($sessions)
+                       <table class="container_calendar">
+                           <thead class="top">
+                           <tr>
+                               <th colspan="7">
+                                   <a href="/profile?month=<?php echo $monthnb - 1; ?>&year=<?php echo $year; ?>"> < </a>
+                                   <span class="headcal"><?php echo($month.' '.$year); ?></span>
+                                   <a href="/profile?month=<?php echo $monthnb + 1; ?>&year=<?php echo $year; ?>"> > </a>
+                               </th>
+                           </tr>
+                           <tr>
+                               <?php for($i = 1; $i <= 7; $i++){
+                                   echo('<th>'.$daytab[$i].'</th>');
+                               }?>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           <?php for($i = 1; $i <= count($calendar); $i++) {
+                               echo('<tr>');
+                               for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++){
+                                   if($j-$z+1+(($i*7)-7) == date("j") && $monthnb == date("n") && $year == date("Y")) {
+                                       $day_class = 'currentday';
+                                       $day_current = $calendar[$i][$j];
+                                   } else {
+                                       if ( $calendar[$i][$j] == "" ) {
+                                           $day_class = 'jourVide';
+                                           $day_current = '';
+                                       } else {
+                                           $jour = $calendar[$i][$j];
+                                           $datecomplete = $year."-".$monthnb."-".$jour;
+                                           $day_class = 'otherDay';
+                                           $day_current = $calendar[$i][$j];
+                                       }
+                                   }
+                                   // Hide days of the week before the 1rst on the month
+                                   if($day_current == '') {
+                                       echo('<td><p>'.$day_current.'</p></td>');
+                                   } else {
+                                       $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
+                                       $session_date = date_create_from_format('j/m/Y', $session_date_obj);
+                                       echo ('<td data-start="'.$session_date->format('Y-m-d').' 00:00:00" class="'.$day_class.'">');
+                                       echo('<p>'.$day_current.'</p>');
 
-                               // Test if user has already a session on this date
-                               $has_session = null;
-                               foreach ($sessions as $session)
-                               {
-                                   if($session->start == $session_date->format('Y-m-d'))
-                                   {
-                                       $has_session = $session;
+                                       // Test if user has already a session on this date
+                                       $has_session = null;
+                                       foreach ($sessions as $session)
+                                       {
+                                           if($session->start == $session_date->format('Y-m-d'))
+                                           {
+                                               $has_session = $session;
+                                           }
+                                       }
+                                       if($has_session) {
+                                           $classroom = $classrooms->where("id", $has_session->classroom_id)->first();
+                                           echo ('<a href="/sessions/'.$has_session->id.'" class="already">'
+                                               .$formations->where("id", $has_session->formation_id)->first()->title.
+                                               '<br>'
+                                               .$classroom->name.
+                                               '<br>'
+                                               .$classroom->places.
+                                               '</a>');
+                                       }
+                                       echo('</td>');
                                    }
                                }
-                               if($has_session) {
-                                   $classroom = $classrooms->where("id", $has_session->classroom_id)->first();
-                                   echo ('<a href="/sessions/'.$has_session->id.'" class="already">'
-                                       .$formations->where("id", $has_session->formation_id)->first()->title.
-                                       '<br>'
-                                       .$classroom->name.
-                                       '<br>'
-                                       .$classroom->places.
-                                       '</a>');
-                               }
-                               echo('</td>');
-                           }
-                       }
-                       echo('</tr>');
-                   } ?>
-                   </tbody>
-               </table>
-           </section>
+                               echo('</tr>');
+                           } ?>
+                           </tbody>
+                       </table>
+                   @else
+                       <p>Aucune session de programmée</p>
+                   @endif
+               </section>
+           @else
+               <section class="mb-40">
+                   <h2>Mes formations</h2>
+                   <p class="mb-20">Mince, vous n'avez créé aucune formation !</p>
+                   <a class="btn red" href="{{ route('formations.create') }}">Créer une formation</a>
+               </section>
+           @endif
+
        @endcan
 
        @can('is-student')
