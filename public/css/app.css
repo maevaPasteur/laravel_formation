@@ -343,3 +343,12 @@ header ul li:first-of-type {
   padding: 20px;
 }
 
+.ctas {
+  display: flex;
+  margin: 20px 0;
+}
+
+.ctas a {
+  margin-right: 20px;
+}
+

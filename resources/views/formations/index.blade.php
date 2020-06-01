@@ -11,26 +11,27 @@
         <img src="./images/background.jpg" alt="organisme de formation">
     </section>
     <section class="wrapper container_formations">
-        <h2>La liste des formations</h2>
-        <ul>
+            <h2>La liste des formations</h2>
+            <ul>
             @foreach($formations as $formation)
                 <li>
                     <article>
                         <a href="{{ route('formations.show', $formation)  }}">
                             <h3>Formation en {{ $formation->title  }}</h3>
                             @if (count($formation->categories) > 0)
-                                <p>Catégorie  : </p>
+                                <p>Catégorie(s) :
                                 @foreach($formation->categories as $category)
                                     <span>{{ $category->name }}</span>
                                 @endforeach
+                                </p>
                             @endif
-                            <p>{{ $formation->description  }}</p>
+                            <p>{{ $formation->description }}</p>
                             <button class="btn yellow">Voir la formation</button>
                         </a>
                     </article>
                 </li>
             @endforeach
-        </ul>
+
         {{ $formations->links()  }}
     </section>
 
