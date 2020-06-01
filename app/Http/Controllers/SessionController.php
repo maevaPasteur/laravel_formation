@@ -64,8 +64,8 @@ class SessionController extends Controller
      */
     public function show(Session $session)
     {
-        $formation = Formation::find($session->formation_id)->formation;
-        $classroom = Formation::find($session->classroom_id);
+        $formation = $session->formation;
+        $classroom = $session->classroom;
         $date = date('d/m/Y', strtotime($session->start));
 
         $places_available = $session->classroom->places - $session->users->count();

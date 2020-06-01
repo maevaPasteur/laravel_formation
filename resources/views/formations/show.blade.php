@@ -65,7 +65,7 @@
             @if($sessions->count() > 0)
                 <h3>Les sessions à venir :</h3>
                 <ul class="list-sessions">
-                    @foreach($sessions as $session)
+                    @foreach($sessions->sortBy('start') as $session)
                         <li>
                             <a href="{{ url(route('sessions.show', ['session'=>$session])) }}">
                                 <p class="fw-4">Le <?php echo(date('d/m/Y', strtotime($session->start))) ?></p>
