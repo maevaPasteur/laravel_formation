@@ -7,6 +7,8 @@ use App\Session;
 use App\Formation;
 use App\SessionUser;
 use App\User;
+use Carbon;
+use DB;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
@@ -68,13 +70,14 @@ class SessionController extends Controller
     {
         $formation = $session->formation;
         $classroom = $session->classroom;
-        $date = date('d/m/Y', strtotime($session->start));
-
+        $date = $session->start;
+        $date_beautify = date('d/m/Y', strtotime($date));
+        $current_time = Carbon\Carbon::now()->toDateString();
         $teacher = User::all()->where('id', $formation->user_id)->first();
 
         $places_available = $session->classroom->places - $session->users->count();
 
-        return view('sessions.show', compact('session', 'date', 'formation', 'classroom', 'places_available', 'teacher'));
+        return view('sessions.show', compact('session', 'date', 'formation', 'classroom', 'places_available', 'date_beautify', 'current_time', 'teacher'));
     }
 
     /**
@@ -126,5 +129,24 @@ class SessionController extends Controller
 
         return redirect()->route('sessions.show', $session->id);
     }
+
+    /**
+     * Ajouter et modifier les notes des élèves pour une session.
+     */
+    public function updateNote(Request $request, Session $session)
+    {
+        foreach($session->users as $user) {
+            $note = $request->input("note_$user->id");
+            if($note != null) {
+                DB::table('session_user')
+                ->where('user_id', $user->id)
+                ->where('session_id', $session->id)
+                ->update(array('note' => $note));
+            }
+        }
+
+        return redirect()->route('sessions.show', $session->id);
+    }
+
 
 }
