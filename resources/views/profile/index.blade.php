@@ -169,7 +169,14 @@
                                }
                            }
                            if($has_session) {
-                               echo ('<a href="/sessions/'.$has_session->id.'" class="already">'.$formations->where("id", $has_session->formation_id)->first()->title.'<br>'.$classrooms->where("id", $has_session->classroom_id)->first()->name.'</a>');
+                               $classroom = $classrooms->where("id", $has_session->classroom_id)->first();
+                               echo ('<a href="/sessions/'.$has_session->id.'" class="already">'
+                                   .$formations->where("id", $has_session->formation_id)->first()->title.
+                                   '<br>'
+                                   .$classroom->name.
+                                   '<br>'
+                                   .$classroom->places.
+                                   '</a>');
                            }
                            echo('</td>');
                        }

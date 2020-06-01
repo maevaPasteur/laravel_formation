@@ -321,6 +321,12 @@ header ul li:first-of-type {
   padding: 20px;
 }
 
+.list-sessions li p:first-of-type {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #795548;
+}
+
 .page-profile form {
   display: flex;
   align-items: flex-end;
@@ -490,5 +496,9 @@ header ul li:first-of-type {
 
 .container_calendar a.already:hover {
   color: #AA2FFF;
+}
+
+.table-sessions {
+  background-color: #fff;
 }
 

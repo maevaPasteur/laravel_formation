@@ -39,7 +39,11 @@
                                 <p class="fw-4">Le <?php echo(date('d/m/Y', strtotime($session->start))) ?></p>
                                 <p>Durée : 1 journée</p>
                                 @if($session->users->count() === 0)
-                                    <p class="mb-20">Sois le premier à t'inscrire !</p>
+                                    @if (auth()->user()->id === $formation->user->id)
+                                        <p class="mb-20">Aucune inscription</p>
+                                    @else
+                                        <p class="mb-20">Sois le premier à t'inscrire !</p>
+                                    @endif
                                 @elseif($session->users->count() == 1)
                                     <p class="mb-20">Déjà 1 inscrit</p>
                                 @else

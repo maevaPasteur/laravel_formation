@@ -6,6 +6,7 @@ use App\Classroom;
 use App\Session;
 use App\Formation;
 use App\SessionUser;
+use App\User;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
@@ -69,9 +70,11 @@ class SessionController extends Controller
         $classroom = $session->classroom;
         $date = date('d/m/Y', strtotime($session->start));
 
+        $teacher = User::all()->where('id', $formation->user_id)->first();
+
         $places_available = $session->classroom->places - $session->users->count();
 
-        return view('sessions.show', compact('session', 'date', 'formation', 'classroom', 'places_available'));
+        return view('sessions.show', compact('session', 'date', 'formation', 'classroom', 'places_available', 'teacher'));
     }
 
     /**
