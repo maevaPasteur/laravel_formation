@@ -471,3 +471,7 @@ header ul li:first-of-type {
   background: #FEB801;
 }
 
+.container_calendar .already {
+  font-size: 14px;
+}
+

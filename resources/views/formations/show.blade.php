@@ -149,22 +149,31 @@
                                             $day_current = $calendar[$i][$j];
                                         }
                                     }
-                                    $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
-                                    $session_date = date_create_from_format('j/m/Y', $session_date_obj);
-                                    echo ('<td data-start="'.$session_date->format('Y-m-d').' 00:00:00" class="'.$day_class.'">');
-                                    echo('<p>'.$day_current.'</p>');
-                                    foreach($classrooms as $classroom) {
-                                        $available = $all_sessions->where('start', '=', $session_date->format('Y-m-d').' 00:00:00')->where('classroom_id', $classroom->id);
-                                        if($available->count() == 0) {
-                                            echo('<label>
+                                    if($day_current == '') {
+                                        echo('<td><p>'.$day_current.'</p></td>');
+                                    } else {
+                                        $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
+                                        $session_date = date_create_from_format('j/m/Y', $session_date_obj);
+                                        echo ('<td data-start="'.$session_date->format('Y-m-d').' 00:00:00" class="'.$day_class.'">');
+                                        echo('<p>'.$day_current.'</p>');
+                                        $has_session = $sessions->where('start', '=', $session_date->format('Y-m-d').' 00:00:00');
+                                        if($has_session->count() > 0) {
+                                            echo ('<span class="already">Vous donnez déjà une formation</span>');
+                                        } else {
+                                            foreach($classrooms as $classroom) {
+                                                $available = $all_sessions->where('start', '=', $session_date->format('Y-m-d').' 00:00:00')->where('classroom_id', $classroom->id);
+                                                if($available->count() == 0) {
+                                                    echo('<label>
                                                 <span>'.$classroom->name.'</span>
                                                 <span>'.$classroom->places.' places</span>
                                                 <input type="radio" name="classroom_id" value="'.$classroom->id.'">
                                                 <i></i>
                                             </label>');
+                                                }
+                                            }
+                                            echo('</td>');
                                         }
                                     }
-                                    echo('</td>');
                                 }
                                 echo('</tr>');
                             } ?>

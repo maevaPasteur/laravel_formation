@@ -110,7 +110,9 @@
     input[name='classroom_id']:checked + i {
         background: $yellow;
     }
-
+    .already {
+        font-size: 14px;
+    }
 }
 
 
