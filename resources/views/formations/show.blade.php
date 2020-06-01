@@ -4,13 +4,13 @@
     <div class="wrapper container_formations-detail">
 
         <section class="mb-40">
-            <h1>Formation en {{ $formation->title  }}</h1>
+            <h2>Formation en {{ $formation->title }}</h2>
 
             @foreach($formation->categories as $category)
                 <span class="tag">{{ $category->name }}</span>
             @endforeach
 
-            <p class="fw-4">{{ $formation->description  }}</p>
+            <p class="fw-4">{{ $formation->description }}</p>
             <br>
             <p>{{ $formation->content }}</p>
             <p class="mb-20">Formation proposée par {{  $formation->user->name }}</p>

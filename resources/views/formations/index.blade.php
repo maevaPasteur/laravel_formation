@@ -17,9 +17,9 @@
                 <li>
                     <article>
                             @can('verified', auth()->user())
-                                <a href="{{ route('formations.show', $formation)  }}">
+                                <a href="{{ route('formations.show', $formation) }}">
                             @endcan
-                            <h3>Formation en {{ $formation->title  }}</h3>
+                            <h3>Formation en {{ $formation->title }}</h3>
                             @if (count($formation->categories) > 0)
                                 <p>Catégorie(s) :
                                 @foreach($formation->categories as $category)
@@ -36,7 +36,7 @@
                 </li>
             @endforeach
 
-        {{ $formations->links()  }}
+        {{ $formations->links() }}
     </section>
 
 @endsection
