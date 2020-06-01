@@ -19,10 +19,11 @@
                         <a href="{{ route('formations.show', $formation)  }}">
                             <h3>Formation en {{ $formation->title  }}</h3>
                             @if (count($formation->categories) > 0)
-                                <p>Catégorie(s) :</p>
+                                <p>Catégorie(s) :
                                 @foreach($formation->categories as $category)
                                     <span>{{ $category->name }}</span>
                                 @endforeach
+                                </p>
                             @endif
                             <p>{{ $formation->description }}</p>
                             <button class="btn yellow">Voir la formation</button>
