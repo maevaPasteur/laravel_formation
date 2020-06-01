@@ -23,3 +23,10 @@ form.d-flex  {
          height: 37px;
      }
  }
+
+form .error {
+    color: $red;
+    margin-top: 10px;
+    font-size: 14px;
+    font-style: italic;
+}

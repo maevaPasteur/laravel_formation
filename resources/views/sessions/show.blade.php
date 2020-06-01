@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="wrapper">
-        <a class="btn yellow mb-40">Retour à la formation</a>
+        <a href="/formations/{{ $session->formation->id }}" class="btn yellow mb-40">Retour à la formation</a>
         <h1>Session de la formation {{ $session->formation->title }}</h1>
         <p class="mb-20">{{ $session->formation->description }}</p>
         <table class="mb-20 table-sessions">
@@ -52,7 +52,6 @@
                 @endif
             @endcan
         </div>
-
         @if($session->users->count() > 0)
             <h3>Les inscrits :</h3>
             <ul class="list">
@@ -63,7 +62,6 @@
         @else
             <h3>Personne n'est inscrit pour le moment 🙀</h3>
         @endif
-
     </div>
 
 

@@ -99,6 +99,17 @@ main {
   margin-left: 40px;
 }
 
+.tag {
+  background: #f1f1f1;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  display: inline-block;
+  margin-right: 10px;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
 .btn {
   padding: 10px 15px;
   background: #fff;
@@ -160,6 +171,13 @@ form.d-flex .form-group {
 
 form.d-flex .btn {
   height: 37px;
+}
+
+form .error {
+  color: #FF0E55;
+  margin-top: 10px;
+  font-size: 14px;
+  font-style: italic;
 }
 
 table {
@@ -245,6 +263,71 @@ table:not(.container_calendar) td:first-of-type {
 
 .container_formations .btn {
   margin-top: 10px;
+}
+
+.container_create-formation {
+  position: relative;
+}
+
+.container_create-formation label {
+  font-size: 20px;
+  font-family: "Crete Round", serif;
+  margin: 40px 0 10px;
+}
+
+.container_create-formation .form-group {
+  margin-bottom: 20px;
+}
+
+.container_create-formation .form-group textarea {
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 35px;
+}
+
+.container_create-formation .form-group:nth-of-type(3) textarea {
+  min-height: 150px;
+}
+
+.container_create-formation .form-group:last-of-type input {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.container_create-formation .form-group:last-of-type input:checked + span {
+  background: #FF0E55;
+}
+
+.container_create-formation .list-category {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container_create-formation .list-category label {
+  font-size: 14px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 0 10px 10px 0;
+  font-family: "Raleway", sans-serif;
+  background-color: #D6D5DD;
+  transition: color ease 0.1s, background-color ease 0.1s;
+  cursor: pointer;
+}
+
+.container_create-formation .list-category input:checked + label,
+.container_create-formation .list-category label:hover {
+  background-color: #FEB801;
+  color: #fff;
+}
+
+.container_create-formation img {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: 400px;
+  height: auto;
 }
 
 header {
@@ -496,6 +579,28 @@ header ul li:first-of-type {
 
 .container_calendar a.already:hover {
   color: #AA2FFF;
+}
+
+.container_calendar a.session {
+  display: block;
+  width: calc(100% - 10px);
+  background-color: #f2f0fb;
+  font-size: 12px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.container_calendar a.session:nth-of-type(odd) {
+  background-color: #e6e2ff;
+}
+
+.container_calendar a.session span {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.container_calendar a.session:not(:last-of-type) {
+  margin-bottom: 10px;
 }
 
 .table-sessions {

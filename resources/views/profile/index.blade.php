@@ -46,11 +46,11 @@
                                    @endcan
                                    <h3>Formation en {{ $formation->title }}</h3>
                                    @if (count($formation->categories) > 0)
-                                       <p>Catégorie(s) :
+                                       <div class="d-flex">
                                            @foreach($formation->categories as $category)
-                                               <span>{{ $category->name }}</span>
+                                               <span class="tag">{{ $category->name }}</span>
                                            @endforeach
-                                       </p>
+                                       </div>
                                    @endif
                                    <p>{{ $formation->description }}</p>
                                    @can('verified', auth()->user())

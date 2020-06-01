@@ -6,6 +6,7 @@ use App\Classroom;
 use App\Formation;
 use App\Session;
 use App\Category;
+use App\User;
 use Illuminate\Http\Request;
 
 class FormationController extends Controller
@@ -24,8 +25,11 @@ class FormationController extends Controller
     public function index()
     {
         $formations = Formation::latest()->paginate(10);
+        $sessions = Session::all();
+        $classrooms = Classroom::all();
+        $teachers = User::all()->where('role', 'teacher');
 
-        return view('formations.index', compact('formations'));
+        return view('formations.index', compact('formations', 'sessions', 'classrooms', 'teachers'));
     }
 
     /**

@@ -127,6 +127,24 @@
             color: $purple;
         }
     }
+    a.session {
+        display: block;
+        width: calc(100% - 10px);
+        background-color: #f2f0fb;
+        font-size: 12px;
+        padding: 5px;
+        border-radius: 5px;
+        &:nth-of-type(odd) {
+            background-color: #e6e2ff;
+        }
+        span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        &:not(:last-of-type) {
+            margin-bottom: 10px;
+        }
+    }
 }
 
 
