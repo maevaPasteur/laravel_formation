@@ -12796,6 +12796,20 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+window.addEventListener("DOMContentLoaded", function (event) {
+  // Create session with calendar
+  var newSessionCalendarForm = document.querySelector('.form_create-session');
+
+  if (newSessionCalendarForm) {
+    newSessionCalendarForm.querySelectorAll('input').forEach(function (input) {
+      input.addEventListener('click', function (e) {
+        e.target.closest('label').style.color = '#fff';
+        newSessionCalendarForm.querySelector('input[name="start"]').value = e.target.closest('td').dataset.start;
+        newSessionCalendarForm.submit();
+      });
+    });
+  }
+});
 
 /***/ }),
 
@@ -12886,8 +12900,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/dev-01/Sites/laravel_formation/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/dev-01/Sites/laravel_formation/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/laravel_formation/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/laravel_formation/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

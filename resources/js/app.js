@@ -28,3 +28,19 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+window.addEventListener("DOMContentLoaded", (event) => {
+
+    // Create session with calendar
+    const newSessionCalendarForm = document.querySelector('.form_create-session');
+    if(newSessionCalendarForm) {
+        newSessionCalendarForm.querySelectorAll('input').forEach(input => {
+            input.addEventListener('click', e => {
+                e.target.closest('label').style.color = '#fff';
+                newSessionCalendarForm.querySelector('input[name="start"]').value = e.target.closest('td').dataset.start;
+                newSessionCalendarForm.submit();
+            })
+        })
+    }
+
+});

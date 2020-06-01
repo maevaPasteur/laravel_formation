@@ -29,40 +29,37 @@
             </div>
         </section>
 
-
-        @if (auth()->user())
-            @if (auth()->user()->id === $formation->user->id)
-                <section class="mb-40">
-                    <h3>Ajouter une session</h3>
-                    <form action="{{ route('sessions.store', $formation) }}" method="POST" class="d-flex">
-                        @csrf
-                        <input name="formation_id" id="formation_id" type="text" hidden value="{{ $formation->id }}" />
-                        <div class="form-group">
-                            <label for="start">Date de la session</label>
-                            <input name="start" id="start" type="date" class="@error('start') is-invalid @enderror">
-                            @error('start')
-                            <p class="error">{{ $errors->first('start') }}</p>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="classroom_id">Choix de la salle</label>
-                            <select name="classroom_id" id="classroom_id" class="@error('classroom_id') is-invalid @enderror">
-                                @foreach($classrooms as $classroom)
-                                    <option value="{{ $classroom->id }}">{{ $classroom->name }} - {{ $classroom->places }} places</option>
-                                @endforeach
-                            </select>
-                            @error('classroom_id')
-                            <p class="error">{{ $errors->first('classroom_id') }}</p>
-                            @enderror
-                        </div>
-                        <button type="submit" class="btn yellow">Ok</button>
-                    </form>
-                </section>
+        <section class="mb-40">
+            @if($sessions->count() > 0)
+                <h3>Les sessions à venir :</h3>
+                <ul class="list-sessions">
+                    @foreach($sessions->sortBy('start') as $session)
+                        <li>
+                            <a href="{{ url(route('sessions.show', ['session'=>$session])) }}">
+                                <p class="fw-4">Le <?php echo(date('d/m/Y', strtotime($session->start))) ?></p>
+                                <p>Durée : 1 journée</p>
+                                @if($session->users->count() === 0)
+                                    <p class="mb-20">Sois le premier à t'inscrire !</p>
+                                @elseif($session->users->count() == 1)
+                                    <p class="mb-20">Déjà 1 inscrit</p>
+                                @else
+                                    <p class="mb-20">Déjà {{ $session->users->count() }} inscrits</p>
+                                @endif
+                                <button class="btn yellow">En savoir +</button>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <h3>Aucune session n'est actuellement programmée</h3>
             @endif
-        @endif
+        </section>
+
 
         @if (auth()->user()->id === $formation->user->id)
             <section class="mb-40">
+                <h2>Créer une nouvelle session</h2>
+                <p class="mb-40">Sélectionne la salle de classe à la date souhaitée.<br>Une nouvelle session sera automatiquement ajoutée.</p>
                 <?php
                 $year = date("Y");
                 if(!isset($_GET['month'])) $monthnb = date("n");
@@ -116,6 +113,9 @@
                     case 12: $month = 'D&eacute;cembre'; break;
                 }
                 ?>
+                <form  action="{{ route('sessions.store', $formation) }}" method="POST" class="form_create-session">
+                    @csrf
+                    <input type="hidden" name="start" value="">
                     <table class="container_calendar">
                         <thead class="top">
                         <tr>
@@ -149,40 +149,32 @@
                                             $day_current = $calendar[$i][$j];
                                         }
                                     }
-                                    echo ('<td class="'.$day_class.'">'.$day_current.'</td>');
+                                    $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
+                                    $session_date = date_create_from_format('j/m/Y', $session_date_obj);
+                                    echo ('<td data-start="'.$session_date->format('Y-m-d').' 00:00:00" class="'.$day_class.'">');
+                                    echo('<p>'.$day_current.'</p>');
+                                    foreach($classrooms as $classroom) {
+                                        $available = $all_sessions->where('start', '=', $session_date->format('Y-m-d').' 00:00:00')->where('classroom_id', $classroom->id);
+                                        if($available->count() == 0) {
+                                            echo('<label>
+                                                <span>'.$classroom->name.'</span>
+                                                <span>'.$classroom->places.' places</span>
+                                                <input type="radio" name="classroom_id" value="'.$classroom->id.'">
+                                                <i></i>
+                                            </label>');
+                                        }
+                                    }
+                                    echo('</td>');
                                 }
                                 echo('</tr>');
                             } ?>
                         </tbody>
                     </table>
+                </form>
             </section>
         @endif
 
-        <section class="mb-40">
-            @if($sessions->count() > 0)
-                <h3>Les sessions à venir :</h3>
-                <ul class="list-sessions">
-                    @foreach($sessions->sortBy('start') as $session)
-                        <li>
-                            <a href="{{ url(route('sessions.show', ['session'=>$session])) }}">
-                                <p class="fw-4">Le <?php echo(date('d/m/Y', strtotime($session->start))) ?></p>
-                                <p>Durée : 1 journée</p>
-                                @if($session->users->count() === 0)
-                                    <p class="mb-20">Sois le premier à t'inscrire !</p>
-                                @elseif($session->users->count() == 1)
-                                    <p class="mb-20">Déjà 1 inscrit</p>
-                                @else
-                                    <p class="mb-20">Déjà {{ $session->users->count() }} inscrits</p>
-                                @endif
-                                <button class="btn purple">En savoir +</button>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            @else
-                <h3>Aucune session n'est actuellement programmée</h3>
-            @endif
-        </section>
+
     </div>
 
 
