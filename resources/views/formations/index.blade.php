@@ -10,18 +10,16 @@
         </div>
         <img src="./images/background.jpg" alt="organisme de formation">
     </section>
-    <section class="wrapper">
-        <h1>La liste des formations</h1>
-        <ul class="list-formations">
+    <section class="wrapper container_formations">
+        <h2>La liste des formations</h2>
+        <ul>
             @foreach($formations as $formation)
                 <li>
-                    <article>
-                        <a href="{{ route('formations.show', $formation)  }}">
-                            <h2>Formation en {{ $formation->title  }}</h2>
-                            <p>{{ $formation->description  }}</p>
-                            <button>Détail de la formation</button>
-                        </a>
-                    </article>
+                    <a href="{{ route('formations.show', $formation)  }}">
+                        <h3>Formation en {{ $formation->title  }}</h3>
+                        <p>{{ $formation->description  }}</p>
+                        <button class="btn yellow">Voir la formation</button>
+                    </a>
                 </li>
             @endforeach
         </ul>

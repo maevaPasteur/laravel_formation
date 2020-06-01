@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
+@section('body-class', 'page-profile')
+
+
 @section('content')
    <div class="wrapper">
        <h1>Bonjour {{ Auth::user()->name }}</h1>
        <h2>Mes informations</h2>
-       <form action="{{ route('profile.update', auth()->user()) }}" method="POST">
+       <form action="{{ route('profile.update', Auth::user()->id) }}" method="PATCH">
            @csrf
-           @method('patch')
            <div class="form-group">
                <label for="name">Nom</label>
                <input name="name" id="name" type="text" value="{{ Auth::user()->name }}" class="@error('name') is-invalid @enderror">
@@ -21,7 +23,8 @@
                     <p class="error">{{ $errors->first('email') }}</p>
                @enderror
            </div>
-           <button type="submit">Mettre à jour mes informations</button>
+           <button type="submit" class="btn purple">Ok</button>
        </form>
+       <img src="./images/peoples.svg" alt="personnes">
    </div>
 @endsection
