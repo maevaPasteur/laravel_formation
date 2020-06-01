@@ -20,7 +20,9 @@
                             <a href="{{ route('formations.show', $formation)  }}">
                                 <h2>Formation en {{ $formation->title  }}</h2>
                                 <h3>
-                                    Catégorie(s) :
+                                    @if (count($formation->categories) > 0)
+                                         Catégorie(s) :
+                                    @endif
                                     @foreach($formation->categories as $category)
                                         {{ $category->name }} |
                                     @endforeach

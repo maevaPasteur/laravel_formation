@@ -119,6 +119,11 @@ header ul li:first-of-type {
   padding: 10px;
 }
 
+.container {
+  max-width: 80%;
+  margin: auto;
+}
+
 .container_presentation {
   height: 100vh;
   position: relative;

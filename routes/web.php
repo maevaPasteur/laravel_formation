@@ -42,6 +42,6 @@ Route::get('/categories', 'CategoryController@index')->name('categories.index');
 Route::post('/categories', 'CategoryController@store')->name('categories.store');
 
 // Users
-Route::get('/users', 'UserController@index')->name('users.index');
+Route::get('/users', 'UserController@index')->name('users.index')->middleware('auth');
 
 Auth::routes();
