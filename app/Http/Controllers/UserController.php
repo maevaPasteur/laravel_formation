@@ -95,4 +95,19 @@ class UserController extends Controller
     {
         //
     }
+
+    /**
+     * Set an user to validate. He gan now go on the application
+     *
+     * @param  User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function validateUser($user)
+    {
+        $user->update([
+            'verified' => 1
+        ]);
+
+        return redirect()->route('users.index');
+    }
 }

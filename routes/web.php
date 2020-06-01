@@ -45,9 +45,8 @@ Route::post('/categories', 'CategoryController@store')->name('categories.store')
 
 // Users
 Route::get('/users', 'UserController@index')->name('users.index')->middleware('auth');
+Route::post('/users/{user}/verification', 'UserController@validateUser')->middleware('auth');
 
 // Sessions
 Route::get('/sessions', 'SessionController@index')->name('sessions.index')->middleware('auth');
 Route::delete('/sessions/{session}', 'SessionController@destroy')->name('sessions.destroy');
-
-Auth::routes();

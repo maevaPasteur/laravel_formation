@@ -1,3 +1,4 @@
+@inject('UserController', 'App\Http\Controllers\UserController')
 @extends('layouts.app')
 
 @section('content')
@@ -22,6 +23,7 @@
                             @can('is-admin')
                                 <th scope="col">Mail</th>
                                 <th scope="col">Rôle</th>
+                                <th scope="col">En attente</th>
                             @endcan
                             </tr>
                         </thead>
@@ -33,6 +35,19 @@
                                 @can('is-admin')
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->role }}</td>
+                                    <td>
+                                        @if($user->verified === 0)
+                                        <form action="{{ route('users.update', $session) }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn green">Valider</button>
+                                        </form>
+                                        {{-- <form action="{{ route('users.destroy', $user) }}" method="post">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn red">Refuser</button>
+                                        </form> --}}
+                                        @endif
+                                    </td>
                                 @endcan
                                 </tr>
                             @endforeach
