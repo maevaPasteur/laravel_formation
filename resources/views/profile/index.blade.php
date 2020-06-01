@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('body-class', 'page-profile')
+
+
 @section('content')
    <div class="wrapper">
        <h1>Bonjour {{ Auth::user()->name }}</h1>
@@ -28,7 +31,8 @@
                     <p class="error">{{ $errors->first('role') }}</p>
                @enderror
            </div>
-           <button type="submit">Mettre à jour mes informations</button>
+           <button type="submit" class="btn purple">Ok</button>
        </form>
+       <img src="./images/peoples.svg" alt="personnes">
    </div>
 @endsection

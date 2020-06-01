@@ -10,10 +10,10 @@
         </div>
         <img src="./images/background.jpg" alt="organisme de formation">
     </section>
-    <section class="wrapper">
+    <section class="wrapper container_formations">
         @can('is-admin')
             <h1>La liste des formations</h1>
-            <ul class="list-formations">
+            <ul>
                 @foreach($formations as $formation)
                     <li>
                         <article>
@@ -28,7 +28,7 @@
                                     @endforeach
                                 </h3>
                                 <p>{{ $formation->description  }}</p>
-                                <button>Détail de la formation</button>
+                                <button class="btn yellow">Voir la formation</button>
                             </a>
                         </article>
                     </li>

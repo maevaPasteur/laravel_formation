@@ -30,17 +30,19 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, User $user)
     {
         $user = auth()->user();
 
-        $data = $request->validate([
+        $request->validate([
             'name' => 'required|min:3',
-            'email' => 'required',
-            'password' => 'required'
+            'email' => 'required'
         ]);
 
-        $user->update($data);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email
+        ]);
 
         return redirect()->route('profile.index');
     }

@@ -26,7 +26,9 @@ Route::get('sessions/inscription/{session}', 'SessionController@inscription')->n
 
 // Profile
 Route::get('profile', 'ProfileController@index')->name('profile.index');
-Route::resource('profile', 'ProfileController');
+Route::patch('profile/{profile}', 'ProfileController@update')->name('profile.update');
+Route::resource('profile', 'ProfileController', ['only'=> ['index','update','destroy']]);
+
 
 // Home
 Route::get('/home', 'HomeController@index')->name('home');
