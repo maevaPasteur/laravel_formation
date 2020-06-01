@@ -45,6 +45,7 @@ Route::post('/categories', 'CategoryController@store')->name('categories.store')
 
 // Users
 Route::get('/users', 'UserController@index')->name('users.index')->middleware('auth');
+Route::resource('users', 'UserController')->except(['index']);
 
 // Sessions
 Route::get('/sessions', 'SessionController@index')->name('sessions.index')->middleware('auth');
