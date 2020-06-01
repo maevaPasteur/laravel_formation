@@ -47,6 +47,20 @@
                                             <button type="submit" class="btn red">Refuser</button>
                                         </form> --}}
                                         @endif
+                                    <td>
+                                        <form action="{{ route('users.update', $user) }}" method="POST">
+                                        @csrf
+                                        @method('patch')
+                                            <select name="role" id="role">
+                                                <option value="{{ $user->role }}">{{ $user->role }}</option>
+                                                @foreach($collection as $role)
+                                                    @if( $role != $user->role ) {
+                                                        <option value="{{ $role }}">{{ $role }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            <button class="btn red" type="submit">Changer le rôle</button>
+                                        </form>
                                     </td>
                                 @endcan
                                 </tr>
