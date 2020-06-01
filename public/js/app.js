@@ -12796,6 +12796,20 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+window.addEventListener("DOMContentLoaded", function (event) {
+  // Create session with calendar
+  var newSessionCalendarForm = document.querySelector('.form_create-session');
+
+  if (newSessionCalendarForm) {
+    newSessionCalendarForm.querySelectorAll('input').forEach(function (input) {
+      input.addEventListener('click', function (e) {
+        e.target.closest('label').style.color = '#fff';
+        newSessionCalendarForm.querySelector('input[name="start"]').value = e.target.closest('td').dataset.start;
+        newSessionCalendarForm.submit();
+      });
+    });
+  }
+});
 
 /***/ }),
 
