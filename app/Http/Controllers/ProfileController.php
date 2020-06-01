@@ -27,6 +27,7 @@ class ProfileController extends Controller
         $formations = Formation::all()->where('user_id', $user->id);
         $classrooms = Classroom::all();
         $all_sessions = Session::all();
+        $all_formations = Formation::all();
         $sessions = array();
         foreach ($formations as $formation)
         {
@@ -35,7 +36,7 @@ class ProfileController extends Controller
                 array_push($sessions, $session);
             }
         }
-        return view('profile.index', compact('user', 'formations', 'sessions', 'classrooms'));
+        return view('profile.index', compact('user', 'formations', 'sessions', 'classrooms', 'all_formations'));
     }
 
     /**
