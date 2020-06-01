@@ -21,8 +21,8 @@
                             <th scope="col">Name</th>
                             @can('is-admin')
                                 <th scope="col">Mail</th>
+                                <th scope="col">Rôle</th>
                             @endcan
-                            <th scope="col">Rôle</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,9 +31,9 @@
                                 <th scope="row">{{ $user->id }}</th>
                                 <td>{{ $user->name }}</td>
                                 @can('is-admin')
-                                <td>{{ $user->email }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $user->role }}</td>
                                 @endcan
-                                <td>{{ $user->role }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

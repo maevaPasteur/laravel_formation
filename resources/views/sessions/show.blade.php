@@ -37,11 +37,13 @@
         </table>
 
         <div class="mb-40">
-            @if($session->users->contains(auth()->user()))
-                <p>Vous êtes inscrit à cette session.</p>
-            @else
-                <a href="{{ route('sessions.inscription', $session)  }}" class="btn purple">S'inscrire</a>
-            @endif
+            @can('is-student')
+                @if($session->users->contains(auth()->user()))
+                    <p>Vous êtes inscrit à cette session.</p>
+                @else
+                    <a href="{{ route('sessions.inscription', $session)  }}" class="btn purple">S'inscrire</a>
+                @endif
+            @endcan
         </div>
 
 

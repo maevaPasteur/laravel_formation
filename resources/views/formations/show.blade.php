@@ -30,33 +30,35 @@
         </section>
 
 
-        @if (auth()->user()->id === $formation->user->id)
-            <section class="mb-40">
-                <h3>Ajouter une session</h3>
-                <form action="{{ route('sessions.store', $formation) }}" method="POST" class="d-flex">
-                    @csrf
-                    <input name="formation_id" id="formation_id" type="text" hidden value="{{ $formation->id }}" />
-                    <div class="form-group">
-                        <label for="start">Date de la session</label>
-                        <input name="start" id="start" type="date" class="@error('start') is-invalid @enderror">
-                        @error('start')
-                        <p class="error">{{ $errors->first('start') }}</p>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="classroom_id">Choix de la salle</label>
-                        <select name="classroom_id" id="classroom_id" class="@error('classroom_id') is-invalid @enderror">
-                            @foreach($classrooms as $classroom)
-                                <option value="{{ $classroom->id }}">{{ $classroom->name }} - {{ $classroom->places }} places</option>
-                            @endforeach
-                        </select>
-                        @error('classroom_id')
-                        <p class="error">{{ $errors->first('classroom_id') }}</p>
-                        @enderror
-                    </div>
-                    <button type="submit" class="btn yellow">Ok</button>
-                </form>
-            </section>
+        @if (auth()->user())
+            @if (auth()->user()->id === $formation->user->id)
+                <section class="mb-40">
+                    <h3>Ajouter une session</h3>
+                    <form action="{{ route('sessions.store', $formation) }}" method="POST" class="d-flex">
+                        @csrf
+                        <input name="formation_id" id="formation_id" type="text" hidden value="{{ $formation->id }}" />
+                        <div class="form-group">
+                            <label for="start">Date de la session</label>
+                            <input name="start" id="start" type="date" class="@error('start') is-invalid @enderror">
+                            @error('start')
+                            <p class="error">{{ $errors->first('start') }}</p>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="classroom_id">Choix de la salle</label>
+                            <select name="classroom_id" id="classroom_id" class="@error('classroom_id') is-invalid @enderror">
+                                @foreach($classrooms as $classroom)
+                                    <option value="{{ $classroom->id }}">{{ $classroom->name }} - {{ $classroom->places }} places</option>
+                                @endforeach
+                            </select>
+                            @error('classroom_id')
+                            <p class="error">{{ $errors->first('classroom_id') }}</p>
+                            @enderror
+                        </div>
+                        <button type="submit" class="btn yellow">Ok</button>
+                    </form>
+                </section>
+            @endif
         @endif
 
         <section class="mb-40">
