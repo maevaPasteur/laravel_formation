@@ -1,7 +1,13 @@
+@inject('Carbon', 'Carbon\Carbon')
 @extends('layouts.app')
 
 @section('content')
     <h2>Formation en {{ $formation->title  }}</h2>
+    <h3>Catégorie(s) de la formation : 
+        @foreach($formation->categories as $category)
+            {{ $category->name }} | 
+        @endforeach
+    </h3>
     <p>{{ $formation->description  }}</p>
     <p>Formation proposée par {{  $formation->user->name }}</p>
 
@@ -20,7 +26,11 @@
     <h3>La liste des sessions</h3>
     <ul>
         @foreach($sessions as $session)
-            <li>{{ $session->start }}</li><button>S'inscrire</button>
+            <li>
+                <a href="{{ url(route('sessions.show', ['session'=>$session])) }}">
+                    {{ $session->start }}
+                </a>
+            </li>
         @endforeach
     </ul>
 

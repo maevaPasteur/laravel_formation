@@ -34,17 +34,15 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        dd($user);
-        dd($request);
-        die();
-
-        $data = $request->validate([
+        $request->validate([
             'name' => 'required|min:3',
-            'email' => 'required',
-            'password' => 'required'
+            'email' => 'required'
         ]);
 
-        $user->update($data);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email
+        ]);
 
         return redirect()->route('profile.index');
     }

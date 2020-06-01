@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Formation;
 use App\Session;
+use App\Category;
 use Illuminate\Http\Request;
 
 class FormationController extends Controller
@@ -23,6 +24,7 @@ class FormationController extends Controller
     public function index()
     {
         $formations = Formation::latest()->paginate(10);
+
         return view('formations.index', compact('formations'));
     }
 
@@ -33,7 +35,8 @@ class FormationController extends Controller
      */
     public function create()
     {
-        return view('formations.create');
+        $categories = Category::all();
+        return view('formations.create', compact('categories'));
     }
 
     /**
@@ -54,6 +57,9 @@ class FormationController extends Controller
             'description' => $request->description,
             'content' => $request->content
         ]);
+
+        $category = Category::find($request->category);
+        $formation->categories()->attach($category);
 
         return redirect()->route('formations.show', $formation->id);
     }

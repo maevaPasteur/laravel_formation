@@ -2,8 +2,16 @@
 
 @section('content')
 
+    <h2>Formation : {{ $session->formation->title }}</h2>
     <h2>Session {{ $session->start  }}</h2>
-    <p>Formation : {{ $session->formation->title }}</p>
+
+    <br />
+
+    @if($session->users->contains(auth()->user()))
+        <p>Vous êtes inscrit à cette session.</p>
+    @endif
+
+    <br />
 
     <h3>Liste des inscrits</h3>
     <ul>

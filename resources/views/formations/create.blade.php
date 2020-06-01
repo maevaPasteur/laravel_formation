@@ -24,6 +24,15 @@
                 <p class="error">{{ $errors->first('content') }}</p>
             @enderror
         </div>
+        <div class="form-group">
+            <label for="content">Selectionnez votre catégorie</label>
+            @foreach ($categories as $category)
+                <li>{{$category->name}} : {!! Form::checkbox('category[]', $category->id); !!}</li>
+            @endforeach
+            @error('content')
+                <p class="error">{{ $errors->first('content') }}</p>
+            @enderror
+        </div>
 
         <button type="submit">Créer ma formation</button>
     </form>

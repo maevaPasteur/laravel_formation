@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 // Formations
 Route::get('/', 'FormationController@index')->name('formations.index');
 Route::resource('formations', 'FormationController')->except(['index']);
@@ -32,7 +34,16 @@ Route::resource('profile', 'ProfileController', ['only'=> ['index','update','des
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Classrooms
-Route::get('/classrooms', 'ClassroomController@index')->name('classrooms.index');
+Route::middleware('can:is-admin')->group(function () {
+    Route::get('/classrooms', 'ClassroomController@index')->name('classrooms.index');
+});
 Route::post('/classrooms', 'ClassroomController@store')->name('classrooms.store');
+
+// Categories
+Route::get('/categories', 'CategoryController@index')->name('categories.index');
+Route::post('/categories', 'CategoryController@store')->name('categories.store');
+
+// Users
+Route::get('/users', 'UserController@index')->name('users.index');
 
 Auth::routes();
