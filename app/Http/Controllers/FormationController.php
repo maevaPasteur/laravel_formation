@@ -75,8 +75,17 @@ class FormationController extends Controller
         $classrooms = Classroom::all();
         $sessions = Session::all()->where('formation_id', $formation->id);
         $all_sessions = Session::all();
+        $user_sessions = array();
+        $formations = Formation::all();
+        foreach ($formations->where('user_id', auth()->user()->id) as $f)
+        {
+            foreach ($all_sessions->where('formation_id', $f->id) as $i)
+            {
+                array_push($user_sessions, $i);
+            }
+        }
 
-        return view('formations.show', compact('formation', 'classrooms', 'sessions', 'all_sessions'));
+        return view('formations.show', compact('formation', 'classrooms', 'sessions', 'all_sessions', 'user_sessions'));
     }
 
     /**

@@ -149,6 +149,7 @@
                                             $day_current = $calendar[$i][$j];
                                         }
                                     }
+                                    // Hide days of the week before the 1rst on the month
                                     if($day_current == '') {
                                         echo('<td><p>'.$day_current.'</p></td>');
                                     } else {
@@ -156,8 +157,17 @@
                                         $session_date = date_create_from_format('j/m/Y', $session_date_obj);
                                         echo ('<td data-start="'.$session_date->format('Y-m-d').' 00:00:00" class="'.$day_class.'">');
                                         echo('<p>'.$day_current.'</p>');
-                                        $has_session = $sessions->where('start', '=', $session_date->format('Y-m-d').' 00:00:00');
-                                        if($has_session->count() > 0) {
+
+                                        // Test if user has already a session on this date
+                                        $has_session = false;
+                                        foreach ($user_sessions as $session_active)
+                                        {
+                                            if($session_active->start == $session_date->format('Y-m-d'))
+                                            {
+                                                $has_session = true;
+                                            }
+                                        }
+                                        if($has_session) {
                                             echo ('<span class="already">Vous donnez déjà une formation</span>');
                                         } else {
                                             foreach($classrooms as $classroom) {
