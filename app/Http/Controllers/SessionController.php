@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Session;
 use App\Formation;
 use App\SessionUser;
-use App\User;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller

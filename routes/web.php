@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 // Formations
 Route::get('/', 'FormationController@index')->name('formations.index');
 Route::resource('formations', 'FormationController')->except(['index']);
@@ -21,8 +23,6 @@ Route::resource('formations', 'FormationController')->except(['index']);
 Route::post('formations/{formation}', 'SessionController@store')->name('sessions.store');
 Route::get('sessions/{session}', 'SessionController@show')->name('sessions.show');
 Route::get('sessions/inscription/{session}', 'SessionController@inscription')->name('sessions.inscription');
-
-Auth::routes();
 
 // Home
 Route::get('/home', 'HomeController@index')->name('home');
