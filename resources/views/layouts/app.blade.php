@@ -40,24 +40,26 @@
                             </li>
                         @endif
                     @else
-                        @can('is-teacher')
-                            <li>
-                                <a class="btn" href="{{ route('formations.create') }}">Créer une formation</a>
-                            </li>
-                        @endcan
-                        @can('is-admin')
-                            <li>
-                                <a class="btn" href="{{ route('sessions.index') }}">Sessions</a>
-                            </li>
-                            <li>
-                                <a class="btn" href="{{ route('classrooms.index') }}">Classrooms</a>
-                            </li>
-                            <li>
-                                <a class="btn" href="{{ route('users.index') }}">Users</a>
-                            </li>
-                            <li>
-                                <a class="btn darkBlue" href="{{ route('categories.index') }}">Categories</a>
-                            </li>
+                        @can('verified')
+                            @can(['is-teacher'])
+                                <li>
+                                    <a class="btn" href="{{ route('formations.create') }}">Créer une formation</a>
+                                </li>
+                            @endcan
+                            @can('is-admin')
+                                <li>
+                                    <a class="btn" href="{{ route('sessions.index') }}">Sessions</a>
+                                </li>
+                                <li>
+                                    <a class="btn" href="{{ route('classrooms.index') }}">Classrooms</a>
+                                </li>
+                                <li>
+                                    <a class="btn" href="{{ route('users.index') }}">Users</a>
+                                </li>
+                                <li>
+                                    <a class="btn darkBlue" href="{{ route('categories.index') }}">Categories</a>
+                                </li>
+                            @endcan
                         @endcan
                         <li>
                             <a class="btn yellow" href="{{ route('profile.index') }}">Profil</a>

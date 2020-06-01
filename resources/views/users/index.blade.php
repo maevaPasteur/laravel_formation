@@ -37,8 +37,9 @@
                                     <td>{{ $user->role }}</td>
                                     <td>
                                         @if($user->verified === 0)
-                                        <form action="{{ route('users.update', $session) }}" method="post">
+                                        <form action="{{ route('users.validateUser', $user) }}" method="post">
                                             @csrf
+                                            @method('put')
                                             <button type="submit" class="btn green">Valider</button>
                                         </form>
                                         {{-- <form action="{{ route('users.destroy', $user) }}" method="post">

@@ -34,9 +34,6 @@ Route::resource('profile', 'ProfileController', ['only'=> ['index','update','des
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Classrooms
-Route::middleware('can:is-admin')->group(function () {
-    Route::get('/classrooms', 'ClassroomController@index')->name('classrooms.index');
-});
 Route::post('/classrooms', 'ClassroomController@store')->name('classrooms.store');
 
 // Categories
@@ -45,9 +42,20 @@ Route::post('/categories', 'CategoryController@store')->name('categories.store')
 
 // Users
 Route::get('/users', 'UserController@index')->name('users.index')->middleware('auth');
-Route::post('/users/{user}/verification', 'UserController@validateUser')->middleware('auth');
+Route::put('/users/{user}/verification', 'UserController@validateUser')->name('users.validateUser')->middleware('auth');
 Route::resource('users', 'UserController')->except(['index']);
 
 // Sessions
 Route::get('/sessions', 'SessionController@index')->name('sessions.index')->middleware('auth');
 Route::delete('/sessions/{session}', 'SessionController@destroy')->name('sessions.destroy');
+
+// DOCUMENTATION
+
+// To set a route visible only by VERIFIED user && admin or teacher (a teacher not verified can't view this page, so)
+
+// Route::middleware('can:viewall')->group(function () { 
+//   YOUR ROUTE
+//   ex : Route::delete('/sessions/{session}', 'SessionController@destroy')->name('sessions.destroy');
+// });
+
+// To set a route visible only by

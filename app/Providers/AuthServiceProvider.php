@@ -26,19 +26,19 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('is-admin', function ($user) {
-            return $user->role === "admin";
+            return $user->role === "admin" && $user->verified === 1;
         });
 
         Gate::define('is-teacher', function ($user) {
-            return $user->role === "teacher";
+            return $user->role === "teacher" && $user->verified === 1;
         });
 
         Gate::define('is-student', function ($user) {
-            return $user->role === "student";
+            return $user->role === "student" && $user->verified === 1;
         });
 
-        // Gate::define('add-session', function ($user) {
-        //     return $formation->role === "admin";
-        // });
+        Gate::define('verified', function ($user) {
+            return $user->verified === 1;
+        });
     }
 }

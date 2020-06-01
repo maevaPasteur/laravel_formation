@@ -107,10 +107,10 @@ class UserController extends Controller
      */
     public function validateUser($user)
     {
-        $user->update([
-            'verified' => 1
-        ]);
-
+        $user = User::find($user);
+        $user->verified = 1;
+        $user->save();
+    
         return redirect()->route('users.index');
     }
 }
