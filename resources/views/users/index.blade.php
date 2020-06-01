@@ -19,6 +19,9 @@
                             <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
+                            @can('is-admin')
+                                <th scope="col">Mail</th>
+                            @endcan
                             <th scope="col">Rôle</th>
                             </tr>
                         </thead>
@@ -27,6 +30,9 @@
                                 <tr>
                                 <th scope="row">{{ $user->id }}</th>
                                 <td>{{ $user->name }}</td>
+                                @can('is-admin')
+                                <td>{{ $user->email }}</td>
+                                @endcan
                                 <td>{{ $user->role }}</td>
                                 </tr>
                             @endforeach

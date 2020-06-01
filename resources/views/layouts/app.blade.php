@@ -40,9 +40,19 @@
                             </li>
                         @endif
                     @else
-                        <li>
-                            <a class="btn" href="{{ route('formations.create') }}">Créer une formation</a>
-                        </li>
+                        @can('is-teacher')
+                            <li>
+                                <a class="btn" href="{{ route('formations.create') }}">Créer une formation</a>
+                            </li>
+                        @endcan
+                        @can('is-admin')
+                            <li>
+                                <a class="btn" href="{{ route('users.index') }}">Users</a>
+                            </li>
+                            <li>
+                                <a class="btn darkBlue" href="{{ route('categories.index') }}">Categories</a>
+                            </li>
+                        @endcan
                         <li>
                             <a class="btn yellow" href="{{ route('profile.index') }}">Profil</a>
                         </li>
