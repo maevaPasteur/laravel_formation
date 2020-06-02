@@ -34,7 +34,29 @@
                 <td>Places restantes</td>
                 <td>{{ $places_available }}</td>
             </tr>
+                @canany(['is-admin', 'is-teacher'])
+                    <tr>
+                        <td>Compte rendu</td>
+                            @if(($session->start <= date('Y-m-d')) && !is_null($session->report))
+                                <td><a href="/uploads/{{ $session->report->url }}" download>{{ $session->report->url }}</a></td>
+                            @elseif($session->start <= date('Y-m-d') && is_null($session->report))
+                                <td>Aucun rapport n'a été écrit. Vous pouvez en uploader un.
+                                    {{ $session->report }}
+                                    {!! Form::open(['route' => ['reports.store', $session], 'files'=>'true']) !!}
+                                        <input type="file" name="report" />
+                                        {{ Form::submit('Click Me!') }}
+                                    {!! Form::close() !!}
+                                </td>
+                            @elseif($session->start > date('Y-m-d'))
+                                <td>Le rapport sera disponible une fois que la formation seras terminée.</td>
+                            @endif
+                    </tr>
+                @endcanany
         </table>
+
+        @can('is-teacher')
+
+        @endcan
 
         <div class="mb-40">
             @can('is-student')
@@ -47,10 +69,6 @@
                 @endif
             @endcan
         </div>
-
-        <p>{{ $session->formation->user->id }}</p>
-        <p>{{ $session->classroom->id }}</p>
-
 
         @if($session->users->count() > 0)
             <h3>Liste des inscrits</h3>
