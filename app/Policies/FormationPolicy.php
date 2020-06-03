@@ -53,7 +53,7 @@ class FormationPolicy
      */
     public function update(User $user, Formation $formation)
     {
-        return $user->id == $formation->user->id;
+        return $user->id == $formation->user->id || $user->role === "admin";
     }
 
     /**

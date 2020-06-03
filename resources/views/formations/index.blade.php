@@ -56,7 +56,7 @@
             </tr>
             </thead>
             <tbody>
-            @for ($i = 1; $i <= count($calendar); $i++)
+            {{-- @for ($i = 1; $i <= count($calendar); $i++)
                 <tr>
                     @for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++)
                         <?php $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar) ?>
@@ -75,7 +75,7 @@
                         @endif
                     @endfor
                 </tr>
-            @endfor
+            @endfor --}}
             </tbody>
         </table>
     </section>

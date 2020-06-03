@@ -61,8 +61,9 @@ class FormationController extends Controller
      */
     public function create()
     {
+        $teachers = User::all()->where('role', 'teacher');
         $categories = Category::all();
-        return view('formations.create', compact('categories'));
+        return view('formations.create', compact(['categories', 'teachers']));
     }
 
     /**
@@ -85,18 +86,23 @@ class FormationController extends Controller
             'description' => $request->description,
             'content'     => $request->content
         ]);
+        $category = Category::find($request->category);
+        $formation->categories()->attach($category);
+
+        return redirect()->route('formations.show', $formation->id);
         } else {
             $formation = new Formation;
             $formation->title = $request->title;
             $formation->description = $request->description;
             $formation->content = $request->content;
-            $formation->user_id = 2;
+
+            $category = Category::find($request->category);
+            $formation->categories()->attach($category);
+            $formation->user_id = $request->author;
+            $formation->save();
+
+            return redirect()->route('formations.show', $formation->id);
         }
-
-        $category = Category::find($request->category);
-        $formation->categories()->attach($category);
-
-        return redirect()->route('formations.show', $formation->id);
     }
 
     /**

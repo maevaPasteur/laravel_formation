@@ -13,7 +13,7 @@
             <p class="fw-4">{{ $formation->description }}</p>
             <br>
             <p>{{ $formation->content }}</p>
-            <p class="mb-20">Formation proposée par {{  $formation->user->name }}</p>
+            <p class="mb-20">Formation gérée par {{  $formation->user->name }}</p>
 
             <div class="d-flex">
                 @can('update', $formation)
@@ -113,7 +113,7 @@
         }
         ?>
 
-        @if (auth()->user() and auth()->user()->id === $formation->user->id)
+        @if (auth()->user() and auth()->user()->id === $formation->user->id || auth()->user()->role === "admin")
             <section class="mb-40">
                 <h2>Créer une nouvelle session</h2>
                 <p class="mb-40">Sélectionne la salle de classe à la date souhaitée.<br>Une nouvelle session sera automatiquement ajoutée.</p>
