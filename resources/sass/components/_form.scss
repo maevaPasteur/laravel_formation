@@ -5,7 +5,7 @@
         font-size: 12px;
         font-weight: 400;
     }
-    input, textarea, select {
+    input:not([type="checkbox"]), textarea, select {
         background: #fff;
         border: 0;
         width: 200px;
@@ -23,3 +23,10 @@ form.d-flex  {
          height: 37px;
      }
  }
+
+form .error {
+    color: $red;
+    margin-top: 10px;
+    font-size: 14px;
+    font-style: italic;
+}

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddVerifiedToUser extends Migration
+class AddColumnNoteToSessionUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddVerifiedToUser extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('verified')->default(0);
+        Schema::table('session_user', function (Blueprint $table) {
+            $table->integer('note')->nullable()->after('session_id');
         });
     }
 
@@ -25,7 +25,7 @@ class AddVerifiedToUser extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('session_user', function (Blueprint $table) {
             //
         });
     }

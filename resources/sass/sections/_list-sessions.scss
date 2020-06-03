@@ -14,5 +14,10 @@
             display: block;
             padding: 20px;
         }
+        p:first-of-type {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: $brown;
+        }
     }
 }

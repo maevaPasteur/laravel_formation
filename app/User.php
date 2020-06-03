@@ -44,4 +44,9 @@ class User extends Authenticatable
     public function sessions() {
         return $this->belongsToMany('App\Session');
     }
+
+    public function session_users()
+    {
+        return $this->hasMany('App\SessionUser');
+    }
 }

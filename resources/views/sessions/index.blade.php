@@ -1,25 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Sessions</h1>
-    <ul class="list-sessions">
-        @foreach($sessions as $session)
-            <li>
-                <article>
-                    <h2>Le : {{ $session->start }}</h2>
-                    <h3>Formation : {{ $session->formation->title }}</h3>
-                    <h3>Places restantes : {{ $session->classroom->places - $session->users->count() }}</h3>
-                    <p>Inscripitons ouvertes ? {{ $session->open }}</p>
-                    <a href={{ url("/sessions/{$session->id}") }}>En savoir +</a>
-                    {{-- @can('delete', $session)
-                        <form action="{{ route('sessions.destroy', $session) }}" method="post">
-                            @method('delete')
-                            @csrf
-                            <button type="submit" class="btn red">Supprimer</button>
-                        </form>
-                    @endcan --}}
-                </article>
-            </li>
-        @endforeach
-    </ul>
+    <section class="wrapper">
+        <h1>Sessions</h1>
+        <ul class="list-sessions">
+            @foreach($sessions as $session)
+                <li>
+                    <a href="{{ url(route('sessions.show', ['session'=>$session])) }}">
+                        <p class="fw-4">Le {{ $session->start }}</p>
+                        <h2>{{ $session->formation->title }}</h2>
+                        @if($session->users->count() > 1)
+                            <p>{{ $session->users->count() }} inscrits</p>
+                        @else
+                            <p>{{ $session->users->count() }} inscrit</p>
+                        @endif
+                        <p class="mb-20">{{ $session->classroom->places - $session->users->count() }} places restantes</p>
+                        <button class="btn yellow">En savoir +</button>
+                        {{-- @can('delete', $session)
+                            <form action="{{ route('sessions.destroy', $session) }}" method="post">
+                                @method('delete')
+                                @csrf
+                                <button type="submit" class="btn red">Supprimer</button>
+                            </form>
+                        @endcan --}}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+        {{ $sessions->links() }}
+    </section>
+
 @endsection

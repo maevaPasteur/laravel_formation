@@ -21,18 +21,20 @@ Route::resource('formations', 'FormationController')->except(['index']);
 Route::post('formations/{formation}', 'SessionController@store')->name('sessions.store');
 
 // Sessions
+Route::get('sessions/{session}', 'SessionController@show')->name('sessions.show');
+Route::get('/sessions', 'SessionController@index')->name('sessions.index');
 Route::middleware('can:verified')->group(function () {
-    Route::get('sessions/{session}', 'SessionController@show')->name('sessions.show');
     Route::delete('/sessions/{session}', 'SessionController@destroy')->name('sessions.destroy');
     Route::get('sessions/inscription/{session}', 'SessionController@inscription')->name('sessions.inscription');
-    Route::get('/sessions', 'SessionController@index')->name('sessions.index')->middleware('auth');
+    Route::patch('sessions/{session}', 'SessionController@updateNote')->name('sessions.updateNote');
 });
 
 // Profile
+Route::get('profile', 'ProfileController@index')->name('profile.index');
+Route::resource('profile', 'ProfileController', ['only'=> ['index']]);
 Route::middleware('can:verified')->group(function () {
-    Route::get('profile', 'ProfileController@index')->name('profile.index');
     Route::patch('profile/{profile}', 'ProfileController@update')->name('profile.update');
-    Route::resource('profile', 'ProfileController', ['only'=> ['index','update','destroy']]);
+    Route::resource('profile', 'ProfileController', ['only'=> ['update','destroy']]);
 });
 
 

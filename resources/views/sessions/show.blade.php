@@ -3,20 +3,25 @@
 @section('content')
 
     <div class="wrapper">
-        <h1>Formation : {{ $session->formation->title }}</h1>
+        <a href="/formations/{{ $session->formation->id }}" class="btn yellow mb-40">Retour à la formation</a>
+        <h1>Session de la formation {{ $session->formation->title }}</h1>
         <p class="mb-20">{{ $session->formation->description }}</p>
-        <table class="mb-20">
+        <table class="mb-20 table-sessions">
             <tr>
                 <td>Date</td>
-                <td>{{ $date }}</td>
+                <td>{{ $date_beautify }}</td>
+            </tr>
+            <tr>
+                <td>Enseignant</td>
+                <td>{{ $teacher->name }}</td>
+            </tr>
+            <tr>
+                <td>Début</td>
+                <td>9h</td>
             </tr>
             <tr>
                 <td>Durée</td>
-                <td>1 journée</td>
-            </tr>
-            <tr>
-                <td>Coût</td>
-                <td>1000€ + 300€ de frais d'inscription</td>
+                <td>7h</td>
             </tr>
             <tr>
                 <td>Salle</td>
@@ -65,22 +70,46 @@
                 @elseif($places_available > 0)
                     <a href="{{ route('sessions.inscription', $session) }}" class="btn purple">S'inscrire</a>
                 @else
-                    <p>Il n'y a plus de place à cette formation
+                    <p>Il n'y a plus de place disponible pour cette formation 🤭</p>
                 @endif
             @endcan
         </div>
-
-        @if($session->users->count() > 0)
-            <h3>Liste des inscrits</h3>
+        @if($session->users->count() > 0 and auth()->user() and auth()->user()->id === $teacher->id)
+            <h3>Les inscrits :</h3>
             <ul class="list">
-                @foreach($session->users as $user)
-                    <li>{{ $user->name }}</li>
-                @endforeach
-            </ul>
-        @else
-            <h3>Personne n'est inscrit pour le moment</h3>
-        @endif
+                @if($current_time > $date)
+                    @can('is-teacher')
+                        <form action="{{ route('sessions.updateNote', $session) }}" method="POST">
+                            @csrf
+                            @method('patch')
+                    @endcan
+                @endif
 
+                @foreach($session->users as $user)
+                <li>
+                    <div class="form-group form-students-sessions">
+                        <p>{{ $user->name }}</p>
+                            @if($current_time > $date)
+                                @can('is-teacher')
+                                    <input name="note_{{ $user->id }}" id="note_{{ $user->id }}" type="number" placeholder="Donnez une note" value="{{ \Helper::getNote($session->id, $user->id )}}" min="0" max="20" class="@error('note') is-invalid @enderror">
+                                    @error('note')
+                                        <p class="error">{{ $errors->first('note') }}</p>
+                                    @enderror
+                                @endcan
+                            @endif
+                    </div>
+                </li>
+                @endforeach
+
+                @if($current_time > $date)
+                    @can('is-teacher')
+                        <br />
+                        <button class="btn dark" type="submit">Enregistrer les notes</button>
+                        </form>
+                    @endcan
+                @endif
+            </ul>
+        @endif
     </div>
 
 

@@ -46,3 +46,60 @@
 
     }
 }
+
+.container_create-formation {
+    position: relative;
+    label {
+        font-size: 20px;
+        font-family: "Crete Round", serif;
+        margin: 40px 0 10px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+        textarea {
+            width: 100%;
+            max-width: 100%;
+            min-width: 100%;
+            min-height: 35px;
+        }
+        &:nth-of-type(3) textarea {
+            min-height: 150px;
+        }
+        &:last-of-type {
+            input {
+                opacity: 0;
+                position: absolute;
+                pointer-events: none;
+                &:checked + span {
+                    background: $red;
+                }
+            }
+        }
+    }
+    .list-category {
+        display: flex;
+        flex-wrap: wrap;
+        label {
+            font-size: 14px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 0 10px 10px 0;
+            font-family: "Raleway", sans-serif;
+            background-color: $mediumGrey;
+            transition: color ease .1s, background-color ease .1s;
+            cursor: pointer;
+        }
+        input:checked + label,
+        label:hover {
+            background-color: $yellow;
+            color: #fff;
+        }
+    }
+    img {
+        position: absolute;
+        top: -20px;
+        right: 0;
+        width: 400px;
+        height: auto;
+    }
+}
