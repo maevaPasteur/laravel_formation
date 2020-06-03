@@ -56,7 +56,6 @@ class SessionController extends Controller
         $session->formation_id = $formation->id;
         $session->open = 1;
         $session->save();
-        dd($request);
 
         return redirect()->route('formations.show', $formation->id);
     }
