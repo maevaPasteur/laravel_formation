@@ -78,11 +78,21 @@ class FormationController extends Controller
             'description' => 'required|min:10',
             'content'     => 'required|min:30'
         ]);
-        $formation = auth()->user()->formations()->create([
+
+        if (auth()->user()->role === "teacher") {
+            $formation = auth()->user()->formations()->create([
             'title'       => $request->title,
             'description' => $request->description,
             'content'     => $request->content
         ]);
+        } else {
+            $formation = new Formation;
+            $formation->title = $request->title;
+            $formation->description = $request->description;
+            $formation->content = $request->content;
+            $formation->user_id = 2;
+        }
+
         $category = Category::find($request->category);
         $formation->categories()->attach($category);
 

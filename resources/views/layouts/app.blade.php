@@ -41,11 +41,11 @@
                         @endif
                     @else
                         @can('verified')
-                            @can(['is-teacher'])
+                            @canany(['is-admin', 'is-teacher'])
                                 <li>
                                     <a class="btn" href="{{ route('formations.create') }}">Créer une formation</a>
                                 </li>
-                            @endcan
+                            @endcanany
                             @can('is-admin')
                                 <li>
                                     <a class="btn" href="{{ route('sessions.index') }}">Sessions</a>
