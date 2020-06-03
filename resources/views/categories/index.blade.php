@@ -1,34 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Categories</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {!! Form::open(['url' => 'categories']) !!}
-                        {!! Form::text('name') !!}
-                        {!! Form::submit('Post a category') !!}
-                    {!! Form::close() !!}
-
-                    <br />
-
-                    <ul>
-                        @foreach ($categories as $category)
-                            <li>{{$category->name}}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
+    <section class="wrapper">
+        <div class="mb-40">
+            <h1>Liste des catégories</h1>
+            @if($categories->count() > 0)
+                <ul>
+                    @foreach ($categories as $category)
+                        <li>{{$category->name}}</li>
+                    @endforeach
+                </ul>
+            @else
+                <p>Aucune catégorie n'a été créé pouèr le moment</p>
+            @endif
         </div>
-    </div>
-</div>
+        {!! Form::open(['url' => 'categories']) !!}
+            <div class="d-flex align-end">
+                <div class="form-group mr-20">
+                    <label>Nom de la catégorie</label>
+                    <input name="name" type="text" required>
+                </div>
+                <button type="submit" class="btn purple">Valider</button>
+            </div>
+        {!! Form::close() !!}
+    </section>
 @endsection

@@ -77,4 +77,15 @@ class Formation extends Model
         $session_date = date_create_from_format('j/m/Y', $day_current.'/'.$monthnb.'/'.$year);
         return $sessions->where("start",  "=", $session_date->format('Y-m-d'));
     }
+
+    public function has_session($user_sessions, $session_date) {
+        $has_session = false;
+        foreach ($user_sessions as $session_active) {
+            if($session_active->start == $session_date->format('Y-m-d'))
+            {
+                $has_session = true;
+            }
+        }
+        return $has_session;
+    }
 }

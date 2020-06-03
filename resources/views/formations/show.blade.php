@@ -5,16 +5,18 @@
 
         <section class="mb-40">
             <h2>Formation en {{ $formation->title }}</h2>
-
             @foreach($formation->categories as $category)
                 <span class="tag">{{ $category->name }}</span>
             @endforeach
-
             <p class="fw-4">{{ $formation->description }}</p>
             <br>
             <p>{{ $formation->content }}</p>
+<<<<<<< HEAD
             <p class="mb-20">Formation gérée par {{  $formation->user->name }}</p>
 
+=======
+            <p class="mb-20">Formation proposée par {{  $formation->user->name }}</p>
+>>>>>>> 83fe844bef68f41bfa662f0fcc4aa8e182f0e9a2
             <div class="d-flex">
                 @can('update', $formation)
                     <a class="btn dark mr-20" href="{{ route('formations.edit', $formation) }}">Modifier la formation</a>
@@ -28,6 +30,7 @@
                 @endcan
             </div>
         </section>
+
 
         <section class="mb-40">
             @if($sessions->count() > 0)
@@ -59,59 +62,6 @@
             @endif
         </section>
 
-        <?php
-        $year = date("Y");
-        if(!isset($_GET['month'])) $monthnb = date("n");
-        else {
-            $monthnb = $_GET['month'];
-            $year = $_GET['year'];
-            if($monthnb <= 0) {
-                $monthnb = 12;
-                $year = $year - 1;
-            }
-            elseif($monthnb > 12) {
-                $monthnb = 1;
-                $year = $year + 1;
-            }
-        }
-        $day = date("w");
-        $nbdays = date("t", mktime(0,0,0,$monthnb,1,$year));
-        $firstday = date("w",mktime(0,0,0,$monthnb,1,$year));
-        $daytab[1] = 'Lundi';
-        $daytab[2] = 'Mardi';
-        $daytab[3] = 'Mercredi';
-        $daytab[4] = 'Jeudi';
-        $daytab[5] = 'Vendredi';
-        $daytab[6] = 'Samedi';
-        $daytab[7] = 'Dimanche';
-        $calendar = array();
-        $z = (int)$firstday;
-        if($z == 0) $z =7;
-        for($i = 1; $i <= ($nbdays/5); $i++){
-            for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++){
-                if($j < $z && ($j-$z+1+(($i*7)-7)) <= 0){
-                    $calendar[$i][$j] = null;
-                }
-                else {
-                    $calendar[$i][$j] = $j-$z+1+(($i*7)-7);
-                }
-            }
-        }
-        switch($monthnb) {
-            case 1: $month = 'Janvier'; break;
-            case 2: $month = 'Fevrier'; break;
-            case 3: $month = 'Mars'; break;
-            case 4: $month = 'Avril'; break;
-            case 5: $month = 'Mai'; break;
-            case 6: $month = 'Juin'; break;
-            case 7: $month = 'Juillet'; break;
-            case 8: $month = 'Août'; break;
-            case 9: $month = 'Septembre'; break;
-            case 10: $month = 'Octobre'; break;
-            case 11: $month = 'Novembre'; break;
-            case 12: $month = 'D&eacute;cembre'; break;
-        }
-        ?>
 
         @if (auth()->user() and auth()->user()->id === $formation->user->id || auth()->user()->role === "admin")
             <section class="mb-40">
@@ -124,138 +74,110 @@
                         <thead class="top">
                         <tr>
                             <th colspan="7">
-                                <a href="/formations/{{ $formation->id }}?month=<?php echo $monthnb - 1; ?>&year=<?php echo $year; ?>"> < </a>
-                                <span class="headcal"><?php echo($month.' '.$year); ?></span>
-                                <a href="/formations/{{ $formation->id }}?month=<?php echo $monthnb + 1; ?>&year=<?php echo $year; ?>"> > </a>
+                                <a href="/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
+                                <span class="headcal">{{ $month.' '.$year }}</span>
+                                <a href="/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
                             </th>
                         </tr>
                         <tr>
-                            <?php for($i = 1; $i <= 7; $i++){
-                                echo('<th>'.$daytab[$i].'</th>');
-                            }?>
+                            @for ($i = 1; $i <= 7; $i++)
+                                <th>{{ $daytab[$i] }}</th>
+                            @endfor
                         </tr>
                         </thead>
                         <tbody>
-                            <?php for($i = 1; $i <= count($calendar); $i++) {
-                                echo('<tr>');
-                                for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++){
-                                    if($j-$z+1+(($i*7)-7) == date("j") && $monthnb == date("n") && $year == date("Y")) {
-                                        $day_class = 'currentday';
-                                        $day_current = $calendar[$i][$j];
-                                    } else {
-                                        if ( $calendar[$i][$j] == "" ) {
-                                            $day_class = 'jourVide';
-                                            $day_current = '';
-                                        } else {
-                                            $jour = $calendar[$i][$j];
-                                            $datecomplete = $year."-".$monthnb."-".$jour;
-                                            $day_class = 'otherDay';
-                                            $day_current = $calendar[$i][$j];
-                                        }
-                                    }
-                                    // Hide days of the week before the 1rst on the month
-                                    if($day_current == '') {
-                                        echo('<td><p>'.$day_current.'</p></td>');
-                                    } else {
-                                        $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
-                                        $session_date = date_create_from_format('j/m/Y', $session_date_obj);
-                                        echo ('<td data-start="'.$session_date->format('Y-m-d').' 00:00:00" class="'.$day_class.'">');
-                                        echo('<p>'.$day_current.'</p>');
-
-                                        // Test if user has already a session on this date
-                                        $has_session = false;
-                                        foreach ($user_sessions as $session_active)
-                                        {
-                                            if($session_active->start == $session_date->format('Y-m-d'))
-                                            {
-                                                $has_session = true;
-                                            }
-                                        }
-                                        if($has_session) {
-                                            echo ('<span class="already">Vous donnez déjà une formation</span>');
-                                        } else {
-                                            foreach($classrooms as $classroom) {
-                                                $available = $all_sessions->where('start', '=', $session_date->format('Y-m-d').' 00:00:00')->where('classroom_id', $classroom->id);
-                                                if($available->count() == 0) {
-                                                    echo('<label>
-                                                <span>'.$classroom->name.'</span>
-                                                <span>'.$classroom->places.' places</span>
-                                                <input type="radio" name="classroom_id" value="'.$classroom->id.'">
-                                                <i></i>
-                                            </label>');
-                                                }
-                                            }
-                                            echo('</td>');
-                                        }
-                                    }
-                                }
-                                echo('</tr>');
-                            } ?>
+                        @for ($i = 1; $i <= count($calendar); $i++)
+                            <tr>
+                                @for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++)
+                                    @php
+                                        $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar)
+                                    @endphp
+                                    @if($day_current == '')
+                                        <td><p>{{ $day_current }}</p></td>
+                                    @else
+                                        <td class="{{ $formation->day_class($j, $z, $i, $monthnb, $year, $calendar) }}">
+                                            <p>{{ $day_current }}</p>
+                                            @php
+                                                $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
+                                                $session_date = date_create_from_format('j/m/Y', $session_date_obj);
+                                            @endphp
+                                            @if($formation->has_session($user_sessions, $session_date))
+                                                <span class="already">Vous donnez déjà une formation</span>
+                                            @else
+                                                @foreach($classrooms as $classroom)
+                                                    @if($all_sessions->where('start', '=', $session_date->format('Y-m-d').' 00:00:00')->where('classroom_id', $classroom->id))
+                                                        <label>
+                                                            <span>{{ $classroom->name }}</span>
+                                                            <span>{{ $classroom->places }} places</span>
+                                                            <input type="radio" name="classroom_id" value="{{ $classroom->id }}">
+                                                            <i></i>
+                                                        </label>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </td>
+                                    @endif
+                                @endfor
+                            </tr>
+                        @endfor
                         </tbody>
                     </table>
                 </form>
             </section>
+
+
         @else
+
+
             <section class="mb-40">
                 <h2>Calendrier des sessions</h2>
                 <table class="container_calendar">
                     <thead class="top">
                     <tr>
                         <th colspan="7">
-                            <a href="/formations/{{ $formation->id }}?month=<?php echo $monthnb - 1; ?>&year=<?php echo $year; ?>"> < </a>
-                            <span class="headcal"><?php echo($month.' '.$year); ?></span>
-                            <a href="/formations/{{ $formation->id }}?month=<?php echo $monthnb + 1; ?>&year=<?php echo $year; ?>"> > </a>
+                            <a href="/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
+                            <span class="headcal">{{ $month.' '.$year }}</span>
+                            <a href="/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
                         </th>
                     </tr>
                     <tr>
-                        <?php for($i = 1; $i <= 7; $i++){
-                            echo('<th>'.$daytab[$i].'</th>');
-                        }?>
+                        @for ($i = 1; $i <= 7; $i++)
+                            <th>{{ $daytab[$i] }}</th>
+                        @endfor
                     </tr>
                     </thead>
                     <tbody>
-                    <?php for($i = 1; $i <= count($calendar); $i++) {
-                        echo('<tr>');
-                        for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++){
-                            if($j-$z+1+(($i*7)-7) == date("j") && $monthnb == date("n") && $year == date("Y")) {
-                                $day_class = 'currentday';
-                                $day_current = $calendar[$i][$j];
-                            } else {
-                                if ( $calendar[$i][$j] == "" ) {
-                                    $day_class = 'jourVide';
-                                    $day_current = '';
-                                } else {
-                                    $jour = $calendar[$i][$j];
-                                    $datecomplete = $year."-".$monthnb."-".$jour;
-                                    $day_class = 'otherDay';
-                                    $day_current = $calendar[$i][$j];
-                                }
-                            }
-                            // Hide days of the week before the 1rst on the month
-                            if($day_current == '') {
-                                echo('<td><p>'.$day_current.'</p></td>');
-                            } else {
-                                $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
-                                $session_date = date_create_from_format('j/m/Y', $session_date_obj);
-                                echo ('<td class="'.$day_class.'">');
-                                echo('<p>'.$day_current.'</p>');
-                                $sessions_this_day = $sessions->where("start",  "=", $session_date->format('Y-m-d'));
-                                foreach ($sessions_this_day as $session)
-                                {
-                                    $classroom = $classrooms->where("id", $session->classroom_id)->first();
-                                    $places_availables = $classroom->places - $session->users->count();
-                                    echo ('<a class="session" href="/sessions/'.$session->id.'">
-                                <span>'.$formation->title.'</span><br>'.$places_availables.' places dispo
-                            </a>');
-                                }
-                                echo('</td>');
-                            }
-                        }
-                        echo('</tr>');
-                    } ?>
+                    @for ($i = 1; $i <= count($calendar); $i++)
+                        <tr>
+                            @for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++)
+                                @php
+                                    $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar)
+                                @endphp
+                                @if($day_current == '')
+                                    <td><p>{{ $day_current }}</p></td>
+                                @else
+                                    <td class="{{ $formation->day_class($j, $z, $i, $monthnb, $year, $calendar) }}">
+                                        <p>{{ $day_current }}</p>
+                                        @php
+                                            $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
+                                            $session_date = date_create_from_format('j/m/Y', $session_date_obj);
+                                        @endphp
+                                        @foreach($sessions->where("start",  "=", $session_date->format('Y-m-d')) as $session)
+                                            <a class="session" href="/sessions/{{ $session->id }}">
+                                                <span>{{ $formation->title }}</span><br>
+                                                {{ $classrooms->where("id", $session->classroom_id)->first()->places - $session->users->count() }} places dispo
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                @endif
+                            @endfor
+                        </tr>
+                    @endfor
                     </tbody>
                 </table>
             </section>
+
+
         @endif
 
 
