@@ -665,3 +665,18 @@ header ul li:first-of-type {
 .table-note .no-note {
   color: #BABABA;
 }
+
+article {
+  word-break: break-all;
+}
+
+.form-students-sessions {
+  display: flex;
+  align-items: center;
+}
+
+.form-students-sessions input {
+  width: 8% !important;
+  text-align: center;
+  margin-left: 10px;
+}
