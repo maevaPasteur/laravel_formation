@@ -1,35 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Salles</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {!! Form::open(['url' => 'classrooms']) !!}
-                        {!! Form::text('name') !!}
-                        {!! Form::number('places') !!}
-                        {!! Form::submit('Post a room') !!}
-                    {!! Form::close() !!}
-
-                    <br />
-
-                    <ul>
-                        @foreach ($classrooms as $classroom)
-                            <li>{{$classroom->name}}, {{$classroom->places}} places</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
+    <section class="wrapper section-classrooms">
+        <div class="mb-40">
+            <h1>Les salles de classe</h1>
+            @if($classrooms->count() > 0)
+                <ul>
+                    @foreach ($classrooms as $classroom)
+                        <li>{{$classroom->name}}, {{$classroom->places}} places</li>
+                    @endforeach
+                </ul>
+            @else
+                <p>Aucune classe n'a été créé pour l'instant</p>
+            @endif
         </div>
-    </div>
-</div>
+        {!! Form::open(['url' => 'classrooms']) !!}
+        <div class="d-flex wrap">
+            <div class="form-group mr-20">
+                <label>Nom de la classe</label>
+                {!! Form::text('name') !!}
+            </div>
+            <div class="form-group mr-20">
+                <label>Nombre de places</label>
+                <input type="number" max="20" name="places">
+            </div>
+            <button type="submit" class="btn purple">Créer la salle</button>
+        </div>
+        {!! Form::close() !!}
+    </section>
 @endsection

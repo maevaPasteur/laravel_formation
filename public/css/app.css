@@ -627,3 +627,16 @@ header ul li:first-of-type {
   background-color: #fff;
 }
 
+.section-users table {
+  width: 100%;
+  text-align: left;
+}
+
+.section-classrooms .d-flex {
+  align-items: flex-end;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
