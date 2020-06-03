@@ -28,10 +28,8 @@
                                 </div>
                             @endif
                             <p>{{ $formation->description }}</p>
-                            @can('verified', auth()->user())
-                                <button class="btn yellow">Voir la formation</button>
-                            </a>
-                        @endcan
+                            <button class="btn yellow">Voir la formation</button>
+                        </a>
                     </article>
                 </li>
             @endforeach
@@ -59,7 +57,7 @@
             @for ($i = 1; $i <= count($calendar); $i++)
                 <tr>
                     @for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++)
-                        <?php $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar) ?>
+                        @php $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar) @endphp
                         @if($day_current == '')
                             <td><p>{{ $day_current }}</p></td>
                         @else

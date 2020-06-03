@@ -111,7 +111,30 @@ class FormationController extends Controller
             }
         }
 
-        return view('formations.show', compact('formation', 'classrooms', 'sessions', 'all_sessions', 'user_sessions'));
+        // Get calendar data
+        $date     = $this->getDate();
+        $month    = $date['month'];
+        $monthnb  = $date['monthnb'];
+        $year     = $date['year'];
+        $daytab   = $date['daytab'];
+        $calendar = $date['calendar'];
+        $nbdays   = $date['nbdays'];
+        $z        = $date['z'];
+
+        return view('formations.show', compact(
+            'formation',
+            'classrooms',
+            'sessions',
+            'all_sessions',
+            'user_sessions',
+            'month',
+            'monthnb',
+            'year',
+            'daytab',
+            'calendar',
+            'nbdays',
+            'z'
+        ));
     }
 
     /**
