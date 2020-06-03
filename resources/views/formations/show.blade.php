@@ -85,30 +85,31 @@
                             <tr>
                                 @for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++)
                                     @php
-                                        $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar)
+                                        $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar);
+                                        $day_class = $formation->day_class($j, $z, $i, $monthnb, $year, $calendar);
+                                        $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
+                                        $session_date = date_create_from_format('j/m/Y', $session_date_obj);
                                     @endphp
                                     @if($day_current == '')
                                         <td><p>{{ $day_current }}</p></td>
                                     @else
-                                        <td class="{{ $formation->day_class($j, $z, $i, $monthnb, $year, $calendar) }}">
+                                        <td class="{{ $day_class }}" data-start="{{ $session_date->format('Y-m-d') }}' 00:00:00" >
                                             <p>{{ $day_current }}</p>
-                                            @php
-                                                $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
-                                                $session_date = date_create_from_format('j/m/Y', $session_date_obj);
-                                            @endphp
-                                            @if($formation->has_session($user_sessions, $session_date))
-                                                <span class="already">Vous donnez déjà une formation</span>
-                                            @else
-                                                @foreach($classrooms as $classroom)
-                                                    @if($all_sessions->where('start', '=', $session_date->format('Y-m-d').' 00:00:00')->where('classroom_id', $classroom->id))
-                                                        <label>
-                                                            <span>{{ $classroom->name }}</span>
-                                                            <span>{{ $classroom->places }} places</span>
-                                                            <input type="radio" name="classroom_id" value="{{ $classroom->id }}">
-                                                            <i></i>
-                                                        </label>
-                                                    @endif
-                                                @endforeach
+                                            @if(new DateTime($year.'-'.$monthnb.'-'.$day_current) > new DateTime('now'))
+                                                @if($formation->has_session($user_sessions, $session_date))
+                                                    <span class="already">Vous donnez déjà une formation</span>
+                                                @else
+                                                    @foreach($classrooms as $classroom)
+                                                        @if($all_sessions->where('start', '=', $session_date->format('Y-m-d').' 00:00:00')->where('classroom_id', $classroom->id))
+                                                            <label>
+                                                                <span>{{ $classroom->name }}</span>
+                                                                <span>{{ $classroom->places }} places</span>
+                                                                <input type="radio" name="classroom_id" value="{{ $classroom->id }}">
+                                                                <i></i>
+                                                            </label>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
                                             @endif
                                         </td>
                                     @endif

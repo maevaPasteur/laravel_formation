@@ -480,8 +480,12 @@ header ul li:first-of-type {
   width: calc(100% / 7);
 }
 
-.container_calendar td:not(.otherDay) p {
+.container_calendar td:not(.otherDay):not(.currentday) p {
   display: none;
+}
+
+.container_calendar td.currentday p {
+  background: #FF0E55;
 }
 
 .container_calendar tr:first-of-type td {

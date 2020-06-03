@@ -23,8 +23,11 @@
         padding: 10px;
         border: solid 1px $lightGrey;
         width: calc(100% / 7);
-        &:not(.otherDay) p {
+        &:not(.otherDay):not(.currentday) p {
             display: none;
+        }
+        &.currentday p {
+            background: $red;
         }
     }
     tr:first-of-type td {
