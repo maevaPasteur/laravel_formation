@@ -36,6 +36,7 @@
     </section>
     <section class="wrapper">
         <h2>Les prochaines sessions</h2>
+        @if($sessions->count() > 0)
         <table class="container_calendar">
             <thead class="top">
             <tr>
@@ -74,6 +75,7 @@
             @endfor
             </tbody>
         </table>
+        @endif
     </section>
 
 @endsection
