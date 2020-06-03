@@ -59,3 +59,12 @@ Route::middleware('can:verified')->group(function () {
     Route::put('/users/{user}/verification', 'UserController@validateUser')->name('users.validateUser')->middleware('auth');
     Route::resource('users', 'UserController')->except(['index']);
 });
+
+// Reports
+Route::middleware('can:is-admin')->group(function () {
+    Route::get('/reports', 'ReportController@index')->name('reports.index')->middleware('auth');
+});
+
+Route::middleware('can:is-teacher')->group(function () {
+    Route::post('/reports/{session}', 'ReportController@store')->name('reports.store')->middleware('auth');
+});

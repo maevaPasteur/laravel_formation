@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Classroom;
+use App\Report;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +24,14 @@ class Session extends Model
     public function users()
     {
         return $this->belongsToMany('App\User');
+    }
+
+    /**
+     * Get the report record associated with the session.
+     */
+    public function report()
+    {
+        return $this->hasOne('App\Report');
     }
 
     public function session_users()
