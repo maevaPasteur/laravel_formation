@@ -29,7 +29,29 @@ class FormationController extends Controller
         $classrooms = Classroom::all();
         $teachers = User::all()->where('role', 'teacher');
 
-        return view('formations.index', compact('formations', 'sessions', 'classrooms', 'teachers'));
+        // Get calendar data
+        $date     = $this->getDate();
+        $month    = $date['month'];
+        $monthnb  = $date['monthnb'];
+        $year     = $date['year'];
+        $daytab   = $date['daytab'];
+        $calendar = $date['calendar'];
+        $nbdays   = $date['nbdays'];
+        $z        = $date['z'];
+
+        return view('formations.index', compact(
+            'formations',
+            'sessions',
+            'classrooms',
+            'teachers',
+            'month',
+            'monthnb',
+            'year',
+            'daytab',
+            'calendar',
+            'nbdays',
+            'z'
+        ));
     }
 
     /**
@@ -52,17 +74,17 @@ class FormationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|min:3',
+            'title'       => 'required|min:3',
             'description' => 'required|min:10',
-            'content' => 'required|min:30'
+            'content'     => 'required|min:30'
         ]);
 
         if (auth()->user()->role === "teacher") {
             $formation = auth()->user()->formations()->create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'content' => $request->content
-            ]);
+            'title'       => $request->title,
+            'description' => $request->description,
+            'content'     => $request->content
+        ]);
         } else {
             $formation = new Formation;
             $formation->title = $request->title;
@@ -85,11 +107,11 @@ class FormationController extends Controller
      */
     public function show(Formation $formation)
     {
-        $classrooms = Classroom::all();
-        $sessions = Session::all()->where('formation_id', $formation->id);
-        $all_sessions = Session::all();
+        $classrooms    = Classroom::all();
+        $sessions      = Session::all()->where('formation_id', $formation->id);
+        $all_sessions  = Session::all();
         $user_sessions = array();
-        $formations = Formation::all();
+        $formations    = Formation::all();
 
         foreach ($formations->where('user_id', $formation->user->id) as $f)
         {
@@ -126,9 +148,9 @@ class FormationController extends Controller
         $this->authorize('update', $formation);
 
         $data = $request->validate([
-            'title' => 'required|min:3',
+            'title'       => 'required|min:3',
             'description' => 'required|min:10',
-            'content' => 'required|min:30'
+            'content'     => 'required|min:30'
         ]);
 
         $formation->update($data);
@@ -150,4 +172,69 @@ class FormationController extends Controller
 
         return redirect('/');
     }
+
+    public function getDate()
+    {
+        $year = date("Y");
+        if(!isset($_GET['month'])) $monthnb = date("n");
+        else {
+            $monthnb = $_GET['month'];
+            $year = $_GET['year'];
+            if($monthnb <= 0) {
+                $monthnb = 12;
+                $year = $year - 1;
+            }
+            elseif($monthnb > 12) {
+                $monthnb = 1;
+                $year = $year + 1;
+            }
+        }
+        $day = date("w");
+        $nbdays = date("t", mktime(0,0,0,$monthnb,1,$year));
+        $firstday = date("w",mktime(0,0,0,$monthnb,1,$year));
+        $daytab[1] = 'Lundi';
+        $daytab[2] = 'Mardi';
+        $daytab[3] = 'Mercredi';
+        $daytab[4] = 'Jeudi';
+        $daytab[5] = 'Vendredi';
+        $daytab[6] = 'Samedi';
+        $daytab[7] = 'Dimanche';
+        $calendar = array();
+        $z = (int)$firstday;
+        if($z == 0) $z =7;
+        for($i = 1; $i <= ($nbdays/5); $i++){
+            for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++){
+                if($j < $z && ($j-$z+1+(($i*7)-7)) <= 0){
+                    $calendar[$i][$j] = null;
+                }
+                else {
+                    $calendar[$i][$j] = $j-$z+1+(($i*7)-7);
+                }
+            }
+        }
+        switch($monthnb) {
+            case 1: $month  = 'Janvier'; break;
+            case 2: $month  = 'Fevrier'; break;
+            case 3: $month  = 'Mars'; break;
+            case 4: $month  = 'Avril'; break;
+            case 5: $month  = 'Mai'; break;
+            case 6: $month  = 'Juin'; break;
+            case 7: $month  = 'Juillet'; break;
+            case 8: $month  = 'Août'; break;
+            case 9: $month  = 'Septembre'; break;
+            case 10: $month = 'Octobre'; break;
+            case 11: $month = 'Novembre'; break;
+            case 12: $month = 'D&eacute;cembre'; break;
+        }
+        return (array(
+            "month"    => $month,
+            "monthnb"  => $monthnb,
+            "year"     => $year,
+            "daytab"   => $daytab,
+            "calendar" => $calendar,
+            "nbdays"   => $nbdays,
+            "z"        => $z
+        ));
+    }
+
 }
