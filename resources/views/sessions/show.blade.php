@@ -44,7 +44,7 @@
                         <td>Compte rendu</td>
                             @if(($session->start <= date('Y-m-d')) && !is_null($session->report))
                                 <td><a href="/uploads/{{ $session->report->url }}" download>{{ $session->report->url }}</a></td>
-                            @elseif($session->start <= date('Y-m-d') && is_null($session->report))
+                            @elseif($session->start <= date('Y-m-d') && is_null($session->report) && auth()->user()->role === "teacher")
                                 <td>Aucun rapport n'a été écrit. Vous pouvez en uploader un.
                                     {{ $session->report }}
                                     {!! Form::open(['route' => ['reports.store', $session], 'files'=>'true']) !!}
@@ -54,6 +54,8 @@
                                 </td>
                             @elseif($session->start > date('Y-m-d'))
                                 <td>Le rapport sera disponible une fois que la formation seras terminée.</td>
+                            @else
+                                <td>Aucun rapport n'est disponible pour le moment</td>
                             @endif
                     </tr>
                 @endcanany

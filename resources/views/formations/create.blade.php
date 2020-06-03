@@ -27,6 +27,11 @@
                 <p class="error">{{ $errors->first('content') }}</p>
                 @enderror
             </div>
+            <select name="author">
+                @foreach($teachers as $teacher)
+                    <option value="{{ $teacher->id }}" name="author">{{ $teacher->name }}</option>
+                @endforeach
+            </select>
             <div class="form-group">
                 <label>Selectionnez votre catégorie</label>
                 <ul class="list-category">

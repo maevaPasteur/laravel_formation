@@ -38,6 +38,27 @@
                 <p>Aucune formation pour le moment</p>
             @endif
     </section>
+<<<<<<< HEAD
+    <section class="wrapper">
+        <h2>Les prochaines sessions</h2>
+        <table class="container_calendar">
+            <thead class="top">
+            <tr>
+                <th colspan="7">
+                    <a href="/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
+                    <span class="headcal">{{ $month.' '.$year }}</span>
+                    <a href="/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
+                </th>
+            </tr>
+            <tr>
+                @for ($i = 1; $i <= 7; $i++)
+                    <th>{{ $daytab[$i] }}</th>
+                @endfor
+            </tr>
+            </thead>
+            <tbody>
+            {{-- @for ($i = 1; $i <= count($calendar); $i++)
+=======
 
     @if($sessions->count() > 0)
         <section class="wrapper">
@@ -51,11 +72,18 @@
                         <a href="/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
                     </th>
                 </tr>
+>>>>>>> 83fe844bef68f41bfa662f0fcc4aa8e182f0e9a2
                 <tr>
                     @for ($i = 1; $i <= 7; $i++)
                         <th>{{ $daytab[$i] }}</th>
                     @endfor
                 </tr>
+<<<<<<< HEAD
+            @endfor --}}
+            </tbody>
+        </table>
+    </section>
+=======
                 </thead>
                 <tbody>
                 @for ($i = 1; $i <= count($calendar); $i++)
@@ -82,5 +110,6 @@
             </table>
         </section>
     @endif
+>>>>>>> 83fe844bef68f41bfa662f0fcc4aa8e182f0e9a2
 
 @endsection
