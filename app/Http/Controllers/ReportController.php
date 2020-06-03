@@ -39,9 +39,12 @@ class ReportController extends Controller
     {
         $file = $request->file('report');
         $destinationPath = 'uploads';
-        $file->move($destinationPath,$file->getClientOriginalName());
-        $session->report->url = $file->getClientOriginalName();
-        $session->report->save();
+        $fileName = $file->getClientOriginalName();
+        $file->move($destinationPath, $fileName);
+        $report = new Report;
+        $report->url = $fileName;
+        $report->session_id = $session->id;
+        $report->save();
         $session->save();
 
         return redirect()->route('sessions.show', $session->id);
