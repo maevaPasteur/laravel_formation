@@ -16,9 +16,7 @@
             @foreach($formations as $formation)
                 <li>
                     <article>
-                            @can('verified', auth()->user())
-                                <a href="{{ route('formations.show', $formation) }}">
-                            @endcan
+                        <a href="{{ route('formations.show', $formation) }}">
                             <h3>Formation en {{ $formation->title }}</h3>
                             @if (count($formation->categories) > 0)
                                 <div class="d-flex">
