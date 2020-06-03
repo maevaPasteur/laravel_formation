@@ -56,46 +56,26 @@
             </tr>
             </thead>
             <tbody>
-            <?php for($i = 1; $i <= count($calendar); $i++) {
-                echo('<tr>');
-                for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++){
-                    if($j-$z+1+(($i*7)-7) == date("j") && $monthnb == date("n") && $year == date("Y")) {
-                        $day_class = 'currentday';
-                        $day_current = $calendar[$i][$j];
-                    } else {
-                        if ( $calendar[$i][$j] == "" ) {
-                            $day_class = 'jourVide';
-                            $day_current = '';
-                        } else {
-                            $jour = $calendar[$i][$j];
-                            $datecomplete = $year."-".$monthnb."-".$jour;
-                            $day_class = 'otherDay';
-                            $day_current = $calendar[$i][$j];
-                        }
-                    }
-                    // Hide days of the week before the 1rst on the month
-                    if($day_current == '') {
-                        echo('<td><p>'.$day_current.'</p></td>');
-                    } else {
-                        $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
-                        $session_date = date_create_from_format('j/m/Y', $session_date_obj);
-                        echo ('<td class="'.$day_class.'">');
-                        echo('<p>'.$day_current.'</p>');
-                        $sessions_this_day = $sessions->where("start",  "=", $session_date->format('Y-m-d'));
-                        foreach ($sessions_this_day as $session)
-                        {
-                            $formation = $formations->where('id', $session->formation_id)->first();
-                            $classroom = $classrooms->where("id", $session->classroom_id)->first();
-                            $places_availables = $classroom->places - $session->users->count();
-                            echo ('<a class="session" href="/sessions/'.$session->id.'">
-                                <span>'.$formation->title.'</span><br>'.$places_availables.' places dispo
-                            </a>');
-                        }
-                        echo('</td>');
-                    }
-                }
-                echo('</tr>');
-            } ?>
+            @for ($i = 1; $i <= count($calendar); $i++)
+                <tr>
+                    @for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++)
+                        <?php $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar) ?>
+                        @if($day_current == '')
+                            <td><p>{{ $day_current }}</p></td>
+                        @else
+                            <td class="{{ $formation->day_class($j, $z, $i, $monthnb, $year, $calendar) }}">
+                                <p>{{ $day_current }}</p>
+                                @foreach($formation->sessions_this_day($sessions, $day_current, $monthnb, $year) as $session)
+                                    <a class="session" href="/sessions/{{ $session->id }}">
+                                        <span>{{ $formations->where('id', $session->formation_id)->first()->title }}</span><br>
+                                        {{ $classrooms->where("id", $session->classroom_id)->first()->places - $session->users->count() }} places dispo
+                                    </a>
+                                @endforeach
+                            </td>
+                        @endif
+                    @endfor
+                </tr>
+            @endfor
             </tbody>
         </table>
     </section>
