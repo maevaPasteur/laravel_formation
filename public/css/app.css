@@ -627,14 +627,3 @@ header ul li:first-of-type {
   background-color: #fff;
 }
 
-.form-students-sessions {
-  display: flex;
-  align-items : center;
-}
-
-.form-students-sessions input {
-  margin-left: 10px;
-  width: 125px !important;
-  text-align: center;
-}
-

@@ -25,4 +25,56 @@ class Formation extends Model
     {
         return $this->belongsToMany('App\Category');
     }
+
+    /**
+     * @param $j
+     * @param $z
+     * @param $i
+     * @param $monthnb
+     * @param $year
+     * @param $calendar
+     * @return string
+     *
+     * Return the day class : 'currentday' or 'jourVide' or 'otherDay
+     */
+    public function day_class($j, $z, $i, $monthnb, $year, $calendar) {
+        if($j-$z+1+(($i*7)-7) == date("j") && $monthnb == date("n") && $year == date("Y")) {
+            return 'currentday';
+        } else {
+            if ( $calendar[$i][$j] == "" ) {
+                return 'jourVide';
+            } else {
+                return 'otherDay';
+            }
+        }
+    }
+
+    /**
+     * @param $j
+     * @param $z
+     * @param $i
+     * @param $monthnb
+     * @param $year
+     * @param $calendar
+     * @return string
+     *
+     * Return the day if exist
+     */
+    public function day_current($j, $z, $i, $monthnb, $year, $calendar) {
+        if($j-$z+1+(($i*7)-7) == date("j") && $monthnb == date("n") && $year == date("Y")) {
+            return $calendar[$i][$j];
+        } else {
+            if ( $calendar[$i][$j] == "" ) {
+                return '';
+            } else {
+                return $calendar[$i][$j];
+            }
+        }
+    }
+
+    public function sessions_this_day($sessions, $day_current, $monthnb, $year)
+    {
+        $session_date = date_create_from_format('j/m/Y', $day_current.'/'.$monthnb.'/'.$year);
+        return $sessions->where("start",  "=", $session_date->format('Y-m-d'));
+    }
 }
