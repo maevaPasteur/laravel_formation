@@ -253,7 +253,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($user->sessions->sortBy('start') as $session)
+                                    @foreach($user->sessions->where('start', '<=', date('Y-m-d').' 00:00:00')->sortBy('start') as $session)
                                         <tr>
                                             <td><?php echo(date('d/m/Y', strtotime($session->start))) ?></th>
                                             <td class="formation">{{ \Illuminate\Support\Str::limit( $all_formations->where('id', $session->formation_id)->first()->title, 25, $end='...') }}

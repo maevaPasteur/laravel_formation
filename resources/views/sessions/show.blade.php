@@ -67,12 +67,16 @@
 
         <div class="mb-40">
             @can('is-student')
-                @if($session->users->contains(auth()->user()))
-                    <p>Vous êtes inscrit à cette session.</p>
-                @elseif($places_available > 0)
-                    <a href="{{ route('sessions.inscription', $session) }}" class="btn purple">S'inscrire</a>
+                @if($session->start < date('Y-m-d'))
+                    <p>Inscriptions terminées</p>
                 @else
-                    <p>Il n'y a plus de place disponible pour cette formation 🤭</p>
+                    @if($session->users->contains(auth()->user()))
+                        <p>Vous êtes inscrit à cette session.</p>
+                    @elseif($places_available > 0)
+                        <a href="{{ route('sessions.inscription', $session) }}" class="btn purple">S'inscrire</a>
+                    @else
+                        <p>Il n'y a plus de place disponible pour cette formation 🤭</p>
+                    @endif
                 @endif
             @endcan
         </div>

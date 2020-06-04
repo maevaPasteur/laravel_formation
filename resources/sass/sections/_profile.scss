@@ -42,5 +42,13 @@
             color: #fff;
             font-weight: 400;
         }
+        .have-note {
+            color: $purple;
+        }
+        .no-note {
+            opacity: .5;
+            font-weight: 300;
+            color: #000;
+        }
     }
 }

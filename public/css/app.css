@@ -503,6 +503,16 @@ header ul li:first-of-type {
   font-weight: 400;
 }
 
+.student-marks table .have-note {
+  color: #AA2FFF;
+}
+
+.student-marks table .no-note {
+  opacity: 0.5;
+  font-weight: 300;
+  color: #000;
+}
+
 .container_calendar {
   width: 100%;
   padding: 0;
