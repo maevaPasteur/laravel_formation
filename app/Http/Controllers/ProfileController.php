@@ -7,6 +7,7 @@ use App\Formation;
 use App\Session;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -23,7 +24,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $formations = Formation::all()->where('user_id', $user->id);
         $classrooms = Classroom::all();
         $all_sessions = Session::all();

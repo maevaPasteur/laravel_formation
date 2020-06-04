@@ -650,39 +650,3 @@ header ul li:first-of-type {
   align-items: flex-end;
 }
 
-.table-note {
-  background-color: #fff;
-  text-align: center;
-  border-collapse: collapse;
-}
-
-.table-note td, .table-note th{
-  color: #000000 !important;
-  padding: 10px;
-  border: solid 1px #DEDDE4;
-  width: calc(100% / 3);
-  padding: 10px 20px !important;
-}
-
-.table-note .have-note {
-  font-weight: 700;
-}
-
-.table-note .no-note {
-  color: #BABABA;
-}
-
-article {
-  word-break: break-all;
-}
-
-.form-students-sessions {
-  display: flex;
-  align-items: center;
-}
-
-.form-students-sessions input {
-  width: 8% !important;
-  text-align: center;
-  margin-left: 10px;
-}
