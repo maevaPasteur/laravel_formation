@@ -53,7 +53,7 @@
                     @endforeach
                 </ul>
             @else
-                <h3>Aucune session n'est actuellement programmée</h3>
+                <h3>Aucune session n'est actuellement programmée 🤷‍️</h3>
             @endif
         </section>
 
@@ -128,53 +128,55 @@
         @else
 
 
-            <section class="mb-40">
-                <h2>Calendrier des sessions</h2>
-                <table class="container_calendar">
-                    <thead class="top">
-                    <tr>
-                        <th colspan="7">
-                            <a href="/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
-                            <span class="headcal">{{ $month.' '.$year }}</span>
-                            <a href="/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
-                        </th>
-                    </tr>
-                    <tr>
-                        @for ($i = 1; $i <= 7; $i++)
-                            <th>{{ $daytab[$i] }}</th>
-                        @endfor
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @for ($i = 1; $i <= count($calendar); $i++)
+            @if($sessions->count() > 0)
+                <section class="mb-40">
+                    <h2>Calendrier des sessions</h2>
+                    <table class="container_calendar">
+                        <thead class="top">
                         <tr>
-                            @for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++)
-                                @php
-                                    $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar)
-                                @endphp
-                                @if($day_current == '')
-                                    <td><p>{{ $day_current }}</p></td>
-                                @else
-                                    <td class="{{ $formation->day_class($j, $z, $i, $monthnb, $year, $calendar) }}">
-                                        <p>{{ $day_current }}</p>
-                                        @php
-                                            $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
-                                            $session_date = date_create_from_format('j/m/Y', $session_date_obj);
-                                        @endphp
-                                        @foreach($sessions->where("start",  "=", $session_date->format('Y-m-d')) as $session)
-                                            <a class="session" href="/sessions/{{ $session->id }}">
-                                                <span>{{ $formation->title }}</span><br>
-                                                {{ $classrooms->where("id", $session->classroom_id)->first()->places - $session->users->count() }} places dispo
-                                            </a>
-                                        @endforeach
-                                    </td>
-                                @endif
+                            <th colspan="7">
+                                <a href="/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
+                                <span class="headcal">{{ $month.' '.$year }}</span>
+                                <a href="/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
+                            </th>
+                        </tr>
+                        <tr>
+                            @for ($i = 1; $i <= 7; $i++)
+                                <th>{{ $daytab[$i] }}</th>
                             @endfor
                         </tr>
-                    @endfor
-                    </tbody>
-                </table>
-            </section>
+                        </thead>
+                        <tbody>
+                        @for ($i = 1; $i <= count($calendar); $i++)
+                            <tr>
+                                @for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++)
+                                    @php
+                                        $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar)
+                                    @endphp
+                                    @if($day_current == '')
+                                        <td><p>{{ $day_current }}</p></td>
+                                    @else
+                                        <td class="{{ $formation->day_class($j, $z, $i, $monthnb, $year, $calendar) }}">
+                                            <p>{{ $day_current }}</p>
+                                            @php
+                                                $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
+                                                $session_date = date_create_from_format('j/m/Y', $session_date_obj);
+                                            @endphp
+                                            @foreach($sessions->where("start",  "=", $session_date->format('Y-m-d')) as $session)
+                                                <a class="session" href="/sessions/{{ $session->id }}">
+                                                    <span>{{ $formation->title }}</span><br>
+                                                    {{ $classrooms->where("id", $session->classroom_id)->first()->places - $session->users->count() }} places dispo
+                                                </a>
+                                            @endforeach
+                                        </td>
+                                    @endif
+                                @endfor
+                            </tr>
+                        @endfor
+                        </tbody>
+                    </table>
+                </section>
+            @endif
 
 
         @endif
