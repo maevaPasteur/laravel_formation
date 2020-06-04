@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="baf6e5cb-a14f-47cb-8f8a-3e9b064d1270" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/laravel_formation.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/profile/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/profile/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -133,13 +134,14 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/sessions" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/resources/sass/components" />
       <recent name="$PROJECT_DIR$/resources/sass/global" />
       <recent name="$PROJECT_DIR$/public" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/views/sessions" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -175,7 +177,7 @@
       <workItem from="1591200127827" duration="13103000" />
       <workItem from="1591253189324" duration="3884000" />
       <workItem from="1591266307904" duration="32000" />
-      <workItem from="1591266584500" duration="3884000" />
+      <workItem from="1591266584500" duration="6302000" />
     </task>
     <servers />
   </component>
