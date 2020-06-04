@@ -45,9 +45,9 @@
                 <thead class="top">
                 <tr>
                     <th colspan="7">
-                        <a href="/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
+                        <a href="{{ route('formations.index', $formations) }}/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
                         <span class="headcal">{{ $month.' '.$year }}</span>
-                        <a href="/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
+                        <a href="{{ route('formations.index', $formations) }}/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
                     </th>
                 </tr>
                 <tr>
