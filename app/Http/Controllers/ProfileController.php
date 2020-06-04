@@ -30,6 +30,7 @@ class ProfileController extends Controller
         $all_sessions = Session::all();
         $all_formations = Formation::all();
         $sessions = array();
+
         foreach ($formations as $formation)
         {
             foreach ($all_sessions->where('formation_id', $formation->id) as $session)
