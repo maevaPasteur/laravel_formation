@@ -37,7 +37,31 @@ class ProfileController extends Controller
                 array_push($sessions, $session);
             }
         }
-        return view('profile.index', compact('user', 'formations', 'sessions', 'classrooms', 'all_formations'));
+
+        // Get calendar data
+        $date     = $this->getDate();
+        $month    = $date['month'];
+        $monthnb  = $date['monthnb'];
+        $year     = $date['year'];
+        $daytab   = $date['daytab'];
+        $calendar = $date['calendar'];
+        $nbdays   = $date['nbdays'];
+        $z        = $date['z'];
+
+        return view('profile.index', compact(
+            'user',
+            'formations',
+            'sessions',
+            'classrooms',
+            'all_formations',
+            'month',
+            'monthnb',
+            'year',
+            'daytab',
+            'calendar',
+            'nbdays',
+            'z'
+        ));
     }
 
     /**
@@ -73,6 +97,70 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getDate()
+    {
+        $year = date("Y");
+        if(!isset($_GET['month'])) $monthnb = date("n");
+        else {
+            $monthnb = $_GET['month'];
+            $year = $_GET['year'];
+            if($monthnb <= 0) {
+                $monthnb = 12;
+                $year = $year - 1;
+            }
+            elseif($monthnb > 12) {
+                $monthnb = 1;
+                $year = $year + 1;
+            }
+        }
+        $day = date("w");
+        $nbdays = date("t", mktime(0,0,0,$monthnb,1,$year));
+        $firstday = date("w",mktime(0,0,0,$monthnb,1,$year));
+        $daytab[1] = 'Lundi';
+        $daytab[2] = 'Mardi';
+        $daytab[3] = 'Mercredi';
+        $daytab[4] = 'Jeudi';
+        $daytab[5] = 'Vendredi';
+        $daytab[6] = 'Samedi';
+        $daytab[7] = 'Dimanche';
+        $calendar = array();
+        $z = (int)$firstday;
+        if($z == 0) $z =7;
+        for($i = 1; $i <= ($nbdays/5); $i++){
+            for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++){
+                if($j < $z && ($j-$z+1+(($i*7)-7)) <= 0){
+                    $calendar[$i][$j] = null;
+                }
+                else {
+                    $calendar[$i][$j] = $j-$z+1+(($i*7)-7);
+                }
+            }
+        }
+        switch($monthnb) {
+            case 1: $month  = 'Janvier'; break;
+            case 2: $month  = 'Fevrier'; break;
+            case 3: $month  = 'Mars'; break;
+            case 4: $month  = 'Avril'; break;
+            case 5: $month  = 'Mai'; break;
+            case 6: $month  = 'Juin'; break;
+            case 7: $month  = 'Juillet'; break;
+            case 8: $month  = 'Août'; break;
+            case 9: $month  = 'Septembre'; break;
+            case 10: $month = 'Octobre'; break;
+            case 11: $month = 'Novembre'; break;
+            case 12: $month = 'D&eacute;cembre'; break;
+        }
+        return (array(
+            "month"    => $month,
+            "monthnb"  => $monthnb,
+            "year"     => $year,
+            "daytab"   => $daytab,
+            "calendar" => $calendar,
+            "nbdays"   => $nbdays,
+            "z"        => $z
+        ));
     }
 
 }

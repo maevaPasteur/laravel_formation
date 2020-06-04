@@ -41,60 +41,6 @@
            @endif
        </section>
 
-       <?php
-       $year = date("Y");
-       if(!isset($_GET['month'])) $monthnb = date("n");
-       else {
-           $monthnb = $_GET['month'];
-           $year = $_GET['year'];
-           if($monthnb <= 0) {
-               $monthnb = 12;
-               $year = $year - 1;
-           }
-           elseif($monthnb > 12) {
-               $monthnb = 1;
-               $year = $year + 1;
-           }
-       }
-       $day = date("w");
-       $nbdays = date("t", mktime(0,0,0,$monthnb,1,$year));
-       $firstday = date("w",mktime(0,0,0,$monthnb,1,$year));
-       $daytab[1] = 'Lundi';
-       $daytab[2] = 'Mardi';
-       $daytab[3] = 'Mercredi';
-       $daytab[4] = 'Jeudi';
-       $daytab[5] = 'Vendredi';
-       $daytab[6] = 'Samedi';
-       $daytab[7] = 'Dimanche';
-       $calendar = array();
-       $z = (int)$firstday;
-       if($z == 0) $z =7;
-       for($i = 1; $i <= ($nbdays/5); $i++){
-           for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++){
-               if($j < $z && ($j-$z+1+(($i*7)-7)) <= 0){
-                   $calendar[$i][$j] = null;
-               }
-               else {
-                   $calendar[$i][$j] = $j-$z+1+(($i*7)-7);
-               }
-           }
-       }
-       switch($monthnb) {
-           case 1: $month = 'Janvier'; break;
-           case 2: $month = 'Fevrier'; break;
-           case 3: $month = 'Mars'; break;
-           case 4: $month = 'Avril'; break;
-           case 5: $month = 'Mai'; break;
-           case 6: $month = 'Juin'; break;
-           case 7: $month = 'Juillet'; break;
-           case 8: $month = 'Août'; break;
-           case 9: $month = 'Septembre'; break;
-           case 10: $month = 'Octobre'; break;
-           case 11: $month = 'Novembre'; break;
-           case 12: $month = 'D&eacute;cembre'; break;
-       }
-       ?>
-
        @can(['is-teacher'])
            @if($formations->count() > 0)
                <section class="mb-14 container_formations">
@@ -131,68 +77,56 @@
                            <thead class="top">
                            <tr>
                                <th colspan="7">
-                                   <a href="/profile?month=<?php echo $monthnb - 1; ?>&year=<?php echo $year; ?>"> < </a>
-                                   <span class="headcal"><?php echo($month.' '.$year); ?></span>
-                                   <a href="/profile?month=<?php echo $monthnb + 1; ?>&year=<?php echo $year; ?>"> > </a>
+                                   <a href="/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
+                                   <span class="headcal">{{ $month.' '.$year }}</span>
+                                   <a href="/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
                                </th>
                            </tr>
                            <tr>
-                               <?php for($i = 1; $i <= 7; $i++){
-                                   echo('<th>'.$daytab[$i].'</th>');
-                               }?>
+                               @for ($i = 1; $i <= 7; $i++)
+                                   <th>{{ $daytab[$i] }}</th>
+                               @endfor
                            </tr>
                            </thead>
                            <tbody>
-                           <?php for($i = 1; $i <= count($calendar); $i++) {
-                               echo('<tr>');
-                               for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++){
-                                   if($j-$z+1+(($i*7)-7) == date("j") && $monthnb == date("n") && $year == date("Y")) {
-                                       $day_class = 'currentday';
-                                       $day_current = $calendar[$i][$j];
-                                   } else {
-                                       if ( $calendar[$i][$j] == "" ) {
-                                           $day_class = 'jourVide';
-                                           $day_current = '';
-                                       } else {
-                                           $jour = $calendar[$i][$j];
-                                           $datecomplete = $year."-".$monthnb."-".$jour;
-                                           $day_class = 'otherDay';
-                                           $day_current = $calendar[$i][$j];
-                                       }
-                                   }
-                                   // Hide days of the week before the 1rst on the month
-                                   if($day_current == '') {
-                                       echo('<td><p>'.$day_current.'</p></td>');
-                                   } else {
-                                       $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
-                                       $session_date = date_create_from_format('j/m/Y', $session_date_obj);
-                                       echo ('<td data-start="'.$session_date->format('Y-m-d').' 00:00:00" class="'.$day_class.'">');
-                                       echo('<p>'.$day_current.'</p>');
-
-                                       // Test if user has already a session on this date
-                                       $has_session = null;
-                                       foreach ($sessions as $session)
-                                       {
-                                           if($session->start == $session_date->format('Y-m-d'))
-                                           {
-                                               $has_session = $session;
-                                           }
-                                       }
-                                       if($has_session) {
-                                           $classroom = $classrooms->where("id", $has_session->classroom_id)->first();
-                                           echo ('<a href="/sessions/'.$has_session->id.'" class="already">'
-                                               .$formations->where("id", $has_session->formation_id)->first()->title.
-                                               '<br>'
-                                               .$classroom->name.
-                                               '<br>'
-                                               .$classroom->places.
-                                               '</a>');
-                                       }
-                                       echo('</td>');
-                                   }
-                               }
-                               echo('</tr>');
-                           } ?>
+                           @for ($i = 1; $i <= count($calendar); $i++)
+                               <tr>
+                                   @for($j = 1; $j <= 7 && $j-$z+1+(($i*7)-7) <= $nbdays; $j++)
+                                       @php
+                                           $day_current = $formation->day_current($j, $z, $i, $monthnb, $year, $calendar)
+                                       @endphp
+                                       @if($day_current == '')
+                                           <td><p>{{ $day_current }}</p></td>
+                                       @else
+                                           <td class="{{ $formation->day_class($j, $z, $i, $monthnb, $year, $calendar) }}">
+                                               <p>{{ $day_current }}</p>
+                                               @php
+                                                   $session_date_obj = $day_current.'/'.$monthnb.'/'.$year;
+                                                   $session_date = date_create_from_format('j/m/Y', $session_date_obj);
+                                               $has_session = null;
+                                               foreach ($sessions as $session)
+                                               {
+                                                   if($session->start == $session_date->format('Y-m-d'))
+                                                   {
+                                                       $has_session = $session;
+                                                   }
+                                               }
+                                               @endphp
+                                               @if($has_session)
+                                                   @php $classroom = $classrooms->where("id", $has_session->classroom_id)->first(); @endphp
+                                                   <a href="/sessions/{{ $has_session->id }}" class="already">
+                                                       {{ $formations->where("id", $has_session->formation_id)->first()->title }}
+                                                       <br>
+                                                       {{ $classroom->name }}
+                                                       <br>
+                                                       {{ $classroom->places }}
+                                                   </a>
+                                               @endif
+                                           </td>
+                                       @endif
+                                   @endfor
+                               </tr>
+                           @endfor
                            </tbody>
                        </table>
                    @else
