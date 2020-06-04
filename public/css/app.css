@@ -710,3 +710,7 @@ header ul li:first-of-type {
   align-items: flex-end;
 }
 
+article {
+  word-break:break-all;
+}
+
