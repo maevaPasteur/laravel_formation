@@ -714,3 +714,14 @@ article {
   word-break:break-word;
 }
 
+.form-students-sessions {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.form-students-sessions input {
+  width: 8% !important;
+  text-align: center;
+  margin-left: 10px;
+} 
