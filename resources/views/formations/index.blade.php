@@ -68,7 +68,7 @@
                                     <p>{{ $day_current }}</p>
                                     @foreach($formation->sessions_this_day($sessions, $day_current, $monthnb, $year) as $session)
                                         <a class="session" href="{{ route('sessions.show', $session) }}">
-                                            <span>{{ $formations->where('id', $session->formation_id)->first()->title }}</span><br>
+                                            <span>{{ $all_formations->where('id', $session->formation_id)->first()->title }}</span><br>
                                             {{ $classrooms->where("id", $session->classroom_id)->first()->places - $session->users->count() }} places dispo
                                         </a>
                                     @endforeach

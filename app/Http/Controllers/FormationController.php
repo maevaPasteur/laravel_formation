@@ -24,7 +24,8 @@ class FormationController extends Controller
      */
     public function index()
     {
-        $formations = Formation::latest()->paginate(10);
+        $formations = Formation::latest()->paginate(6);
+        $all_formations = Formation::all();
         $sessions = Session::all();
         $classrooms = Classroom::all();
         $teachers = User::all()->where('role', 'teacher');
@@ -41,6 +42,7 @@ class FormationController extends Controller
 
         return view('formations.index', compact(
             'formations',
+            'all_formations',
             'sessions',
             'classrooms',
             'teachers',
