@@ -35,10 +35,12 @@
                 <td>Nombre d'inscrit</td>
                 <td>{{ $session->users->count() }}</td>
             </tr>
-            <tr>
-                <td>Places restantes</td>
-                <td>{{ $places_available }}</td>
-            </tr>
+            @if($session->start > date('Y-m-d'))
+                <tr>
+                    <td>Places restantes</td>
+                    <td>{{ $places_available }}</td>
+                </tr>
+            @endif
                 @canany(['is-admin', 'is-teacher'])
                     <tr>
                         <td>Compte rendu</td>
