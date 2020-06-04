@@ -62,10 +62,13 @@
                     </tr>
                 @endcanany
         </table>
-
-        @can('is-teacher')
-
-        @endcan
+        @if (auth()->user() and auth()->user()->id === $formation->user->id || auth()->user()->role === "admin")
+            <form action="{{ route('sessions.destroy', $session) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn red">Supprimer</button>
+            </form>
+        @endif
 
         <div class="mb-40">
             @can('is-student')

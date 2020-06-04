@@ -111,11 +111,12 @@ class SessionController extends Controller
      */
     public function destroy(Session $session)
     {
+        $formation = $session->formation;
         $this->authorize('delete', $session);
 
         Session::destroy($session->id);
 
-        return redirect('/sessions');
+        return redirect()->route('formations.show', $formation);
     }
 
     /**
