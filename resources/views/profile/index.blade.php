@@ -215,7 +215,7 @@
                    @if($user->sessions->count() > 0)
                        <h2>Mes sessions à venir :</h2>
                        <ul class="list-sessions">
-                           @foreach($user->sessions->sortBy('start') as $session)
+                           @foreach($user->sessions->where('start', '>', date('Y-m-d').' 00:00:00')->sortBy('start') as $session)
                                <li>
                                    <a href="{{ url(route('sessions.show', ['session'=>$session])) }}">
                                        <p class="fw-4">Le <?php echo(date('d/m/Y', strtotime($session->start))) ?></p>
@@ -307,7 +307,7 @@
            @endif
 
            <section>
-                <section class="mb-40">
+                <section class="mb-40 student-marks">
                    @if($user->sessions->count() > 0)
                        <h2>Mes notes :</h2>
                            <table class="table-note">
@@ -318,9 +318,9 @@
                                         <th>Note</th>
                                     </tr>
                                 </thead>
-                                <tbody>   
+                                <tbody>
                                     @foreach($user->sessions->sortBy('start') as $session)
-                                        <tr> 
+                                        <tr>
                                             <td><?php echo(date('d/m/Y', strtotime($session->start))) ?></th>
                                             <td class="formation">{{ \Illuminate\Support\Str::limit( $all_formations->where('id', $session->formation_id)->first()->title, 25, $end='...') }}
                                                 </td>
