@@ -711,6 +711,6 @@ header ul li:first-of-type {
 }
 
 article {
-  word-break:break-all;
+  word-break:break-word;
 }
 
