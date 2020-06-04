@@ -27,11 +27,13 @@
                 <p class="error">{{ $errors->first('content') }}</p>
                 @enderror
             </div>
-            <select name="author"  @can('is-teacher')class="hide"@endcan>
-                @foreach($teachers as $teacher)
-                    <option value="{{ $teacher->id }}" name="author">{{ $teacher->name }}</option>
-                @endforeach
-            </select>
+            @can('is-admin')
+                <select name="author">
+                    @foreach($teachers as $teacher)
+                        <option value="{{ $teacher->id }}" name="author">{{ $teacher->name }}</option>
+                    @endforeach
+                </select>
+            @endcan
             <div class="form-group">
                 <label>Selectionnez votre catégorie</label>
                 <ul class="list-category">

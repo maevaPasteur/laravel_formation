@@ -305,6 +305,41 @@
                    </table>
                </section>
            @endif
+
+           <section>
+                <section class="mb-40">
+                   @if($user->sessions->count() > 0)
+                       <h2>Mes notes :</h2>
+                           <table class="table-note">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Formation</th>
+                                        <th>Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody>   
+                                    @foreach($user->sessions->sortBy('start') as $session)
+                                        <tr> 
+                                            <td><?php echo(date('d/m/Y', strtotime($session->start))) ?></th>
+                                            <td class="formation">{{ \Illuminate\Support\Str::limit( $all_formations->where('id', $session->formation_id)->first()->title, 25, $end='...') }}
+                                                </td>
+                                            <td>
+                                                @if(\Helper::getNote($session->id, $user->id ) != null)
+                                                    <span class="have-note">{{ \Helper::getNote($session->id, $user->id )}}/20</span>
+                                                @else
+                                                    <span class="no-note">Pas encore de note</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                   @else
+                       <h3>Vous n'avez pas encore de note !</h3>
+                   @endif
+               </section>
+            </section>
        @endcan
 
        <img src="./images/peoples.svg" alt="personnes">

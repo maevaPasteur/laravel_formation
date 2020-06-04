@@ -45,9 +45,9 @@
                 <thead class="top">
                 <tr>
                     <th colspan="7">
-                        <a href="/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
+                        <a href="{{ route('formations.index', $formations) }}/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
                         <span class="headcal">{{ $month.' '.$year }}</span>
-                        <a href="/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
+                        <a href="{{ route('formations.index', $formations) }}/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
                     </th>
                 </tr>
                 <tr>
@@ -67,7 +67,7 @@
                                 <td class="{{ $formation->day_class($j, $z, $i, $monthnb, $year, $calendar) }}">
                                     <p>{{ $day_current }}</p>
                                     @foreach($formation->sessions_this_day($sessions, $day_current, $monthnb, $year) as $session)
-                                        <a class="session" href="/sessions/{{ $session->id }}">
+                                        <a class="session" href="{{ route('sessions.show', $session) }}">
                                             <span>{{ $formations->where('id', $session->formation_id)->first()->title }}</span><br>
                                             {{ $classrooms->where("id", $session->classroom_id)->first()->places - $session->users->count() }} places dispo
                                         </a>

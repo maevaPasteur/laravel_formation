@@ -11,7 +11,8 @@
             <p class="fw-4">{{ $formation->description }}</p>
             <br>
             <p>{{ $formation->content }}</p>
-            <p class="mb-20">Formation proposée par {{  $formation->user->name }}</p>
+            <p class="mb-20">Formation gérée par {{ $formation->user->name }}</p>
+
             <div class="d-flex">
                 @can('update', $formation)
                     <a class="btn dark mr-20" href="{{ route('formations.edit', $formation) }}">Modifier la formation</a>
@@ -68,9 +69,9 @@
                         <thead class="top">
                         <tr>
                             <th colspan="7">
-                                <a href="/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
+                                <a href="{{ route('formations.show', $formation) }}/?month={{ $monthnb - 1 }}&year={{ $year }}"> < </a>
                                 <span class="headcal">{{ $month.' '.$year }}</span>
-                                <a href="/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
+                                <a href="{{ route('formations.show', $formation) }}/?month={{ $monthnb + 1 }}&year={{ $year }}"> > </a>
                             </th>
                         </tr>
                         <tr>
