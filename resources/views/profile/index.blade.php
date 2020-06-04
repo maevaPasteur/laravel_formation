@@ -242,7 +242,7 @@
 
            <section>
                 <section class="mb-40 student-marks">
-                   @if($user->sessions->count() > 0)
+                   @if($user->sessions->where('start', '<=', date('Y-m-d').' 00:00:00')->count() > 0)
                        <h2>Mes notes :</h2>
                            <table class="table-note">
                                 <thead>
