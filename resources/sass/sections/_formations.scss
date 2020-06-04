@@ -103,3 +103,17 @@
         height: auto;
     }
 }
+
+.edit-formation {
+    textarea, input {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+    textarea {
+        min-height: 200px;
+    }
+    #description {
+        min-height: 80px;
+    }
+}

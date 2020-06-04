@@ -356,6 +356,21 @@ table:not(.container_calendar) td:first-of-type {
   height: auto;
 }
 
+.edit-formation textarea,
+.edit-formation input {
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+}
+
+.edit-formation textarea {
+  min-height: 200px;
+}
+
+.edit-formation #description {
+  min-height: 80px;
+}
+
 header {
   position: fixed;
   width: 100%;

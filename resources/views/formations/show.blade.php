@@ -100,7 +100,10 @@
                                                     <span class="already">Vous donnez déjà une formation</span>
                                                 @else
                                                     @foreach($classrooms as $classroom)
-                                                        @if($all_sessions->where('start', '=', $session_date->format('Y-m-d').' 00:00:00')->where('classroom_id', $classroom->id))
+                                                        @php
+                                                            $available = $all_sessions->where('start', '=', $session_date->format('Y-m-d'))->where('classroom_id', $classroom->id);
+                                                        @endphp
+                                                        @if($available->count() == 0)
                                                             <label>
                                                                 <span>{{ $classroom->name }}</span>
                                                                 <span>{{ $classroom->places }} places</span>
