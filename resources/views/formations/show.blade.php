@@ -26,7 +26,6 @@
             </div>
         </section>
 
-
         <section class="mb-40">
             @if($sessions->count() > 0)
                 <h3>Les sessions à venir :</h3>

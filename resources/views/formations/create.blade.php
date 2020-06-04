@@ -27,7 +27,7 @@
                 <p class="error">{{ $errors->first('content') }}</p>
                 @enderror
             </div>
-            <select name="author">
+            <select name="author"  @can('is-teacher')class="hide"@endcan>
                 @foreach($teachers as $teacher)
                     <option value="{{ $teacher->id }}" name="author">{{ $teacher->name }}</option>
                 @endforeach

@@ -130,6 +130,12 @@ main {
   flex-wrap: wrap;
 }
 
+.hide {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
 .btn {
   padding: 10px 15px;
   background: #fff;
