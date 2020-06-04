@@ -73,7 +73,7 @@
                     <p>Inscriptions terminées</p>
                 @else
                     @if($session->users->contains(auth()->user()))
-                        <p>Vous êtes inscrit à cette session.</p>
+                        <a href="{{ route('sessions.desinscription', $session) }}" class="btn purple">Se désinscrire</a>
                     @elseif($places_available > 0)
                         <a href="{{ route('sessions.inscription', $session) }}" class="btn purple">S'inscrire</a>
                     @else

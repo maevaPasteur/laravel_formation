@@ -26,6 +26,7 @@ Route::get('/sessions', 'SessionController@index')->name('sessions.index');
 Route::middleware('can:verified')->group(function () {
     Route::delete('/sessions/{session}', 'SessionController@destroy')->name('sessions.destroy');
     Route::get('sessions/inscription/{session}', 'SessionController@inscription')->name('sessions.inscription');
+    Route::get('sessions/desinscription/{session}', 'SessionController@desinscription')->name('sessions.desinscription');
     Route::patch('sessions/{session}', 'SessionController@updateNote')->name('sessions.updateNote');
 });
 
