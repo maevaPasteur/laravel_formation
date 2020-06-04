@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="wrapper">
-        <a href="{{ route('formations.show',  $session->formation) }}" class="btn yellow mb-40">Retour à la formation</a>
+        <a href="/formations/{{ $session->formation->id }}" class="btn yellow mb-40">Retour à la formation</a>
         <h1>Session de la formation {{ $session->formation->title }}</h1>
         <p class="mb-20">{{ $session->formation->description }}</p>
         <table class="mb-20 table-sessions">
