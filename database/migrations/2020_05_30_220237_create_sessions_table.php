@@ -21,8 +21,8 @@ class CreateSessionsTable extends Migration
             $table->unsignedBigInteger('classroom_id');
             $table->timestamps();
 
-            $table->foreign('formation_id')->references('id')->on('formations');
-            $table->foreign('classroom_id')->references('id')->on('classrooms');
+            $table->foreign('formation_id')->references('id')->on('formations')->onDelete('cascade');
+            $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
         });
     }
 
