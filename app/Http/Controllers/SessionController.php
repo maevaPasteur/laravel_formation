@@ -122,7 +122,17 @@ class SessionController extends Controller
     /**
      * S'inscrire à une session
      */
-    public function inscription(Session $session) {
+    public function desinscription(Session $session) {
+        $user = User::find(auth()->user()->id);
+        $user->sessions()->detach($session->id);
+        return redirect()->route('sessions.show', $session->id);
+    }
+
+    /**
+     * S'inscrire à une session
+     */
+    public function inscription(Session $session)
+    {
         $session_user = new SessionUser;
         $session_user->session_id = $session->id;
         $session_user->user_id = auth()->user()->id;

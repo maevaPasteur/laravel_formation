@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="wrapper">
-        <a href="/formations/{{ $session->formation->id }}" class="btn yellow mb-40">Retour à la formation</a>
+        <a href="{{ route('formations.show',  $session->formation) }}" class="btn yellow mb-40">Retour à la formation</a>
         <h1>Session de la formation {{ $session->formation->title }}</h1>
         <p class="mb-20">{{ $session->formation->description }}</p>
         <table class="mb-20 table-sessions">
@@ -76,7 +76,7 @@
                     <p>Inscriptions terminées</p>
                 @else
                     @if($session->users->contains(auth()->user()))
-                        <p>Vous êtes inscrit à cette session.</p>
+                        <a href="{{ route('sessions.desinscription', $session) }}" class="btn purple">Se désinscrire</a>
                     @elseif($places_available > 0)
                         <a href="{{ route('sessions.inscription', $session) }}" class="btn purple">S'inscrire</a>
                     @else
