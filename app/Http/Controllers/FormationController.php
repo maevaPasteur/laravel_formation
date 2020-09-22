@@ -205,7 +205,7 @@ class FormationController extends Controller
     }
 
     public function getDate()
-    {
+    {   
         $year = date("Y");
         if(!isset($_GET['month'])) $monthnb = date("n");
         else {
